@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, Link as A } from 'react-router-dom';
+import { useNavigate, Link as A, useLocation } from 'react-router-dom';
 
 import { AppContext } from '../contexts/AppContext';
 
@@ -16,43 +16,53 @@ import PeopleIcon from '@mui/icons-material/People';
 function MenuComponent( {children, enforce = true}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const location = useLocation();
+
+  const isCurrentRoute = (path: string): boolean => {
+    if(location.pathname === path){
+      return true;
+    }
+    return false;
+  }
 
   return (
     <>
-      <List>
-        <ListItem disablePadding onClick={() => {
-          navigate('/');
-        }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </ListItem>
+      {AppContextState.accessToken && (
+        <List>
+          <ListItem disablePadding onClick={() => {
+            navigate('/');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/')}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+          </ListItem>
 
-        <ListItem disablePadding onClick={() => {
-          navigate('/tenant');
-        }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <AccountTreeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Tenants" />
-          </ListItemButton>
-        </ListItem>
+          <ListItem disablePadding onClick={() => {
+            navigate('/tenant');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/tenant')}>
+              <ListItemIcon>
+                <AccountTreeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Tenants" />
+            </ListItemButton>
+          </ListItem>
 
-        <ListItem disablePadding onClick={() => {
-          navigate('/user');
-        }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Users" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+          <ListItem disablePadding onClick={() => {
+            navigate('/user');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/user')}>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      )}
     </>
   );
 }

@@ -32,11 +32,12 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;
 }>(({ theme, open }) => ({
   flexGrow: 1,
-  padding: theme.spacing(3),
+  padding: theme.spacing(2),
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  minHeight: `calc(100vh - 64px - 16px - 16px)`,
   marginTop: `64px`,
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -101,6 +102,16 @@ function App() {
     setOpen(!open);
   }
 
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
+
+    setAccessToken(null);
+    setUser(null);
+
+    navigate('/login');
+  }
+
   return (
     <>
       <AppContext.Provider
@@ -129,9 +140,15 @@ function App() {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                   CMS Base Admin
                 </Typography>
-                <Button color="inherit" onClick={() => {
-                  navigate('/login');
-                }}>Login</Button>
+                {accessToken ? (
+                  <Button color="inherit" onClick={() => {
+                    logout();
+                  }}>Logout</Button>
+                ) : (
+                  <Button color="inherit" onClick={() => {
+                    navigate('/login');
+                  }}>Login</Button>
+                )}
               </Toolbar>
             </AppBar>
 
@@ -154,7 +171,9 @@ function App() {
             </Drawer>
 
             <Main open={open}>
-              <Router/>
+              <Box>
+                <Router/>
+              </Box>
             </Main>
           </Box>
         </div>

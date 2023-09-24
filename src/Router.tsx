@@ -13,7 +13,7 @@ function Router() {
     <>
       <Routes>
         <Route path="/" element={
-          <RequireAuthComponent enforce={false}>
+          <RequireAuthComponent enforce={true}>
             <DashboardPage/>
           </RequireAuthComponent>
         }/>
@@ -23,12 +23,12 @@ function Router() {
           </RequireAuthComponent>
         }/>
         <Route path="/tenant" element={ 
-          <RequireAuthComponent enforce={false}>
+          <RequireAuthComponent enforce={true}>
             <TenantPage/>
           </RequireAuthComponent>
         }/>
         <Route path="/user" element={ 
-          <RequireAuthComponent enforce={false}>
+          <RequireAuthComponent enforce={true}>
             <UserPage/>
           </RequireAuthComponent> 
         }/>
