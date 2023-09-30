@@ -3,7 +3,7 @@ import { useNavigate, Link as A } from 'react-router-dom';
 
 import { AppContext } from '../contexts/AppContext';
 
-function RequireAuthComponent( {children, enforce = true}: any ) {
+function RequireAuthComponent( {children, enforce = true, enforceAdmin = false, enforceTenant = false}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
@@ -12,7 +12,29 @@ function RequireAuthComponent( {children, enforce = true}: any ) {
   useEffect(() => {
     if(enforce){
       if(AppContextState.accessToken){
-        setShow(true);
+
+        if(enforceAdmin){
+          if(AppContextState.tenant !== null){
+            setShow(false);
+            navigate('/');
+          } else {
+            setShow(true);
+          }
+        } else {
+          setShow(true);
+        }
+
+        if(enforceTenant){
+          if(AppContextState.tenant == null){
+            setShow(false);
+            navigate('/admin');
+          } else {
+            setShow(true);
+          }
+        } else {
+          setShow(true);
+        }
+
       } else {
         setShow(false);
         navigate('/login');

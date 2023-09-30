@@ -5,7 +5,8 @@ import { AppContext } from './contexts/AppContext';
 
 import Router from "./Router";
 
-import MenuComponent from './components/MenuComponent';
+import {MenuComponent as AdminMenuComponent} from './components/admin/MenuComponent';
+import {MenuComponent as TenantMenuComponent} from './components/tenant/MenuComponent';
 
 import { styled, useTheme } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -95,6 +96,14 @@ function App() {
     return null;
   });
 
+  const [tenant, setTenant]: any = useState(() => {
+    const localTenant = localStorage.getItem("tenant");
+    if(localTenant){
+      return JSON.parse(localTenant);
+    }
+    return null;
+  });
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
@@ -105,9 +114,11 @@ function App() {
   const logout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
+    localStorage.removeItem("tenant");
 
     setAccessToken(null);
     setUser(null);
+    setTenant(null);
 
     navigate('/login');
   }
@@ -119,7 +130,9 @@ function App() {
           accessToken,
           setAccessToken,
           user,
-          setUser
+          setUser,
+          tenant,
+          setTenant
         }}
       >
         <div>
@@ -138,7 +151,7 @@ function App() {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  CMS Base Admin
+                  CMS Base
                 </Typography>
                 {accessToken ? (
                   <Button color="inherit" onClick={() => {
@@ -165,7 +178,11 @@ function App() {
                     </IconButton>
                   </DrawerHeader>
                   <Divider />
-                  <MenuComponent/>
+                  {tenant ? (
+                    <TenantMenuComponent/>
+                  ) : (
+                    <AdminMenuComponent/>
+                  )}
                 </nav>
               </Box>
             </Drawer>

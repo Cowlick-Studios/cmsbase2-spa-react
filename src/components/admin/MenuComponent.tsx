@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A, useLocation } from 'react-router-dom';
 
-import { AppContext } from '../contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -30,7 +30,7 @@ function MenuComponent( {children, enforce = true}: any ) {
       {AppContextState.accessToken && (
         <List>
           <ListItem disablePadding onClick={() => {
-            navigate('/');
+            navigate('/admin');
           }}>
             <ListItemButton selected={isCurrentRoute('/')}>
               <ListItemIcon>
@@ -41,7 +41,7 @@ function MenuComponent( {children, enforce = true}: any ) {
           </ListItem>
 
           <ListItem disablePadding onClick={() => {
-            navigate('/tenant');
+            navigate('/admin/tenant');
           }}>
             <ListItemButton selected={isCurrentRoute('/tenant')}>
               <ListItemIcon>
@@ -52,7 +52,7 @@ function MenuComponent( {children, enforce = true}: any ) {
           </ListItem>
 
           <ListItem disablePadding onClick={() => {
-            navigate('/user');
+            navigate('/admin/user');
           }}>
             <ListItemButton selected={isCurrentRoute('/user')}>
               <ListItemIcon>
@@ -67,4 +67,4 @@ function MenuComponent( {children, enforce = true}: any ) {
   );
 }
 
-export default MenuComponent;
+export {MenuComponent};

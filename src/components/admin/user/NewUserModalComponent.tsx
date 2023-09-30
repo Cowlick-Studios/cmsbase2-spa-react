@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../services/http';
-import { AppContext } from '../../contexts/AppContext';
-import { UserContext } from '../../contexts/UserContext';
+import {http, axios} from '../../../services/http';
+import { AppContext } from '../../../contexts/AppContext';
+import { UserContext } from '../../../contexts/UserContext';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,7 +16,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import Typography from '@mui/material/Typography';
 
-import Modal from '../utility/Modal';
+import Modal from '../../utility/Modal';
 
 function NewUserModalComponent( {open, setOpen}: any ) {
   const navigate = useNavigate();

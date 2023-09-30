@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
 import numeral from 'numeral';
 
-import {axios, http} from '../services/http';
-import { AppContext } from '../contexts/AppContext';
+import {axios, http} from '../../services/http';
+import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 
-import TotalServerDiskUsageComponent from '../components/dashboard/TotalServerDiskUsageComponent';
+import TotalServerDiskUsageComponent from '../../components/admin/dashboard/TotalServerDiskUsageComponent';
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -32,4 +32,4 @@ function DashboardPage() {
   );
 }
 
-export default DashboardPage;
+export {DashboardPage};

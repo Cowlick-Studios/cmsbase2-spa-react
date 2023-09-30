@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
 
-import {axios, http} from '../services/http';
-import { AppContext } from '../contexts/AppContext';
-import { TenantContext } from '../contexts/TenantContext';
+import {axios, http} from '../../services/http';
+import { AppContext } from '../../contexts/AppContext';
+import { TenantContext } from '../../contexts/TenantContext';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
-import NewTenantModalComponent from '../components/tenant/NewTenantModalComponent';
-import TenantTableComponent from '../components/tenant/TenantTableComponent';
+import NewTenantModalComponent from '../../components/admin/tenant/NewTenantModalComponent';
+import TenantTableComponent from '../../components/admin/tenant/TenantTableComponent';
 
 function TenantPage() {
   const navigate = useNavigate();

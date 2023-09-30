@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
 
-import {axios, http} from '../services/http';
-import { AppContext } from '../contexts/AppContext';
-import { UserContext } from '../contexts/UserContext';
+import {axios, http} from '../../services/http';
+import { AppContext } from '../../contexts/AppContext';
+import { UserContext } from '../../contexts/UserContext';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
-import UserTableComponent from '../components/user/UserTableComponent';
-import NewTenantModalComponent from '../components/tenant/NewTenantModalComponent';
-import NewUserModalComponent from '../components/user/NewUserModalComponent';
+import UserTableComponent from '../../components/admin/user/UserTableComponent';
+import NewTenantModalComponent from '../../components/admin/tenant/NewTenantModalComponent';
+import NewUserModalComponent from '../../components/admin/user/NewUserModalComponent';
 
 function UserPage() {
   const navigate = useNavigate();

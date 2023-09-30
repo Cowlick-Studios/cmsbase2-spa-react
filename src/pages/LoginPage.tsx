@@ -6,7 +6,8 @@ import { AppContext } from '../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 
-import LoginComponent from '../components/LoginComponent';
+import {LoginComponent as AdminLoginComponent} from '../components/admin/LoginComponent';
+import {LoginComponent as TenantLoginComponent} from '../components/tenant/LoginComponent';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -16,13 +17,13 @@ function LoginPage() {
     <>
       <Grid
         container
-        gap={2}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
+        spacing={2}
       >
-        <Grid item xs={4}>
-          <LoginComponent/>
+        <Grid item xs={6}>
+          <AdminLoginComponent/>
+        </Grid>
+        <Grid item xs={6}>
+          <TenantLoginComponent/>
         </Grid>
       </Grid>
     </>

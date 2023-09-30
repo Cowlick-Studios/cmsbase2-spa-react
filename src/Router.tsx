@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
 
-import DashboardPage from './pages/DashboardPage';
-import TenantPage from './pages/TenantPage';
-import UserPage from './pages/UserPage';
+import {DashboardPage as AdminDashboardPage} from './pages/admin/DashboardPage';
+import {DashboardPage as TenantDashboardPage } from './pages/tenant/DashboardPage';
+import TenantPage from './pages/admin/TenantPage';
+import UserPage from './pages/admin/UserPage';
 import LoginPage from './pages/LoginPage';
 import UnknownPage from './pages/UnknownPage';
 
@@ -12,26 +13,38 @@ function Router() {
   return (
     <>
       <Routes>
-        <Route path="/" element={
-          <RequireAuthComponent enforce={true}>
-            <DashboardPage/>
-          </RequireAuthComponent>
-        }/>
+        {/* System */}
         <Route path="/login" element={
           <RequireAuthComponent enforce={false}>
             <LoginPage/>
           </RequireAuthComponent>
         }/>
-        <Route path="/tenant" element={ 
-          <RequireAuthComponent enforce={true}>
+
+        {/* Admin */}
+        <Route path="/admin" element={
+          <RequireAuthComponent enforce={true} enforceAdmin={true}>
+            <AdminDashboardPage/>
+          </RequireAuthComponent>
+        }/>
+        <Route path="/admin/tenant" element={ 
+          <RequireAuthComponent enforce={true} enforceAdmin={true}>
             <TenantPage/>
           </RequireAuthComponent>
         }/>
-        <Route path="/user" element={ 
-          <RequireAuthComponent enforce={true}>
+        <Route path="/admin/user" element={ 
+          <RequireAuthComponent enforce={true} enforceAdmin={true}>
             <UserPage/>
-          </RequireAuthComponent> 
+          </RequireAuthComponent>
         }/>
+
+        {/* Tenant */}
+        <Route path="/" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <TenantDashboardPage/>
+          </RequireAuthComponent>
+        }/>
+
+        {/* Catch All */}
         <Route path="*" element={ 
           <RequireAuthComponent enforce={false}>
             <UnknownPage/>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../services/http';
-import { AppContext } from '../contexts/AppContext';
+import {http, axios} from '../../services/http';
+import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -18,6 +18,7 @@ function LoginComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
+  const [tenant, setTenant] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,15 +27,25 @@ function LoginComponent( {}: any ) {
   const [snackbarType, setSnackbarType] = useState<string>("info"); // info, warning, error, success
 
   const login = () => {
-    http.post('/auth/login', {
+
+    let url = "";
+    const tld = process.env.REACT_APP_TLD;
+    if(tld === "localhost"){
+      url = `http://${tenant}.${tld}`;
+    } else {
+      url = `https://${tenant}.${tld}`;
+    }
+    axios.post(`${url}/auth/login`, {
       email: email,
       password: password
     }).then((res) => {
       AppContextState.setAccessToken(res.data.access_token);
       AppContextState.setUser(res.data.user);
+      AppContextState.setTenant(res.data.tenant);
 
       localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
 
       setEmail("");
       setPassword("");
@@ -57,15 +68,21 @@ function LoginComponent( {}: any ) {
   return (
     <>
       <Card variant="outlined">
-        {/* <CardHeader
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016" 
-        /> */}
         <CardContent>
           <Grid
             container
             gap={2}
           >
+            <Grid item xs={12}>
+              <Typography gutterBottom variant="h5" component="h5">
+                Tenant Login
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth id="outlined-basic" label="Tenant" variant="outlined" type="text" value={tenant} onChange={(e) => {
+                setTenant(e.target.value);
+              }} />
+            </Grid>
             <Grid item xs={12}>
               <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" type="email" value={email} onChange={(e) => {
                 setEmail(e.target.value);
@@ -97,4 +114,4 @@ function LoginComponent( {}: any ) {
   );
 }
 
-export default LoginComponent;
+export {LoginComponent};
