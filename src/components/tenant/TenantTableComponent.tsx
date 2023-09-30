@@ -3,6 +3,7 @@ import { useNavigate, Link as A } from 'react-router-dom';
 import {http, axios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 import { TenantContext } from '../../contexts/TenantContext';
+import looseStringCompare from '../../utility/loseStringCompare';
 
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
@@ -12,6 +13,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -25,8 +27,14 @@ function TenantTableComponent( {}: any ) {
   const AppContextState: any = useContext(AppContext);
   const TenantContextState: any = useContext(TenantContext);
 
+  const [searchedTenants, setSearchedTenants] = useState<any>([]);
+  const [searchString, setSearchString] = useState('');
   const [openTenantUpdate, setOpenTenantUpdate] = useState(false);
   const [updateTenant, setUpdateTenant] = useState<any>({});
+
+  useEffect(() => {
+    setSearchedTenants(TenantContextState.tenants);
+  }, [TenantContextState.tenants])
 
   const editTenant = (tenant: any) => {
     setUpdateTenant(tenant);
@@ -54,8 +62,18 @@ function TenantTableComponent( {}: any ) {
     });
   }
 
+  const searchTenants = (searchString: string) => {
+    setSearchString(searchString);
+    setSearchedTenants(TenantContextState.tenants.filter((tenant: any) => {
+      return looseStringCompare(searchString, [tenant.id]);
+    }));
+  }
+
   return (
     <>
+      <TextField size="small" fullWidth label="Search Tenants" variant="outlined" type="text" value={searchString} onChange={(e) => {
+        searchTenants(e.target.value);
+      }}/>
       <Card variant="outlined">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -69,7 +87,7 @@ function TenantTableComponent( {}: any ) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {TenantContextState.tenants.map((tenant: any) => (
+            {searchedTenants.map((tenant: any) => (
               <TableRow
                 key={tenant.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
