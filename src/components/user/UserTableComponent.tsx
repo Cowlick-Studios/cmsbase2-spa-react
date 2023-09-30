@@ -75,10 +75,10 @@ function UserTableComponent( {}: any ) {
                 </TableCell>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{user.verified ? (
-                  <Chip size="small" label="Unverified" color="error" />
-                ) : (
+                <TableCell>{user.email_verified_at ? (
                   <Chip size="small" label="Verified" color="success" />
+                ) : (
+                  <Chip size="small" label="Unverified" color="error" />
                 )}</TableCell>
                 <TableCell>{new Date(user.created_at).toLocaleDateString()}</TableCell>
                 <TableCell>

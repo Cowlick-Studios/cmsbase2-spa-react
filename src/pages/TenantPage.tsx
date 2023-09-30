@@ -16,7 +16,6 @@ function TenantPage() {
   const AppContextState: any = useContext(AppContext);
 
   const [tenants, setTenants] = useState<any>([]);
-
   const [openNewTenant, setOpenNewTenant] = useState(false);
 
   useEffect(() => {
@@ -40,10 +39,11 @@ function TenantPage() {
             }}>New Tenant</Button>
           </Grid>
           <Grid item xs={12}>
-            <NewTenantModalComponent open={openNewTenant} setOpen={setOpenNewTenant}/>
             <TenantTableComponent/>
           </Grid>
         </Grid>
+
+        <NewTenantModalComponent open={openNewTenant} setOpen={setOpenNewTenant}/>
       </TenantContext.Provider>
     </>
   );

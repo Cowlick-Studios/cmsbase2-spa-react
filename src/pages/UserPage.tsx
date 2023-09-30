@@ -5,13 +5,19 @@ import {axios, http} from '../services/http';
 import { AppContext } from '../contexts/AppContext';
 import { UserContext } from '../contexts/UserContext';
 
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+
 import UserTableComponent from '../components/user/UserTableComponent';
+import NewTenantModalComponent from '../components/tenant/NewTenantModalComponent';
+import NewUserModalComponent from '../components/user/NewUserModalComponent';
 
 function UserPage() {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
   const [users, setUsers] = useState<any>([]);
+  const [openNewUser, setOpenNewUser] = useState(false);
 
   useEffect(() => {
     http.get(`/user`).then((res) => {
@@ -29,7 +35,18 @@ function UserPage() {
           setUsers,
         }}
       >
-        <UserTableComponent/>
+        <Grid container gap={2}>
+          <Grid item xs={12}>
+            <Button variant="contained" onClick={() => {
+              setOpenNewUser(!openNewUser);
+            }}>New User</Button>
+          </Grid>
+          <Grid item xs={12}>
+          <UserTableComponent/>
+          </Grid>
+        </Grid>
+        
+        <NewUserModalComponent open={openNewUser} setOpen={setOpenNewUser}/>
       </UserContext.Provider>
     </>
   );
