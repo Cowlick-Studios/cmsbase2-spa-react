@@ -16,7 +16,7 @@ function LoginPage() {
     <>
       <Grid
         container
-        spacing={2}
+        gap={2}
         direction="row"
         justifyContent="center"
         alignItems="center"

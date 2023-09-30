@@ -11,6 +11,8 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import Alert, {AlertProps} from '@mui/material/Alert';
 
 function LoginComponent( {}: any ) {
   const navigate = useNavigate();
@@ -18,6 +20,10 @@ function LoginComponent( {}: any ) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarType, setSnackbarType] = useState<string>("info"); // info, warning, error, success
 
   const login = () => {
     http.post('/auth/login', {
@@ -33,7 +39,18 @@ function LoginComponent( {}: any ) {
       setEmail("");
       setPassword("");
 
+      setSnackbarType("success");
+      setSnackbarMessage(res.data.message);
+      setSnackbarOpen(true);
+
       navigate('/');
+    }).catch((error) => {
+      setSnackbarType("error");
+      setSnackbarMessage(error.response.data.message);
+      setSnackbarOpen(true);
+
+      setEmail("");
+      setPassword("");
     });
   }
 
@@ -47,15 +64,15 @@ function LoginComponent( {}: any ) {
         <CardContent>
           <Grid
             container
-            spacing={2}
+            gap={2}
           >
             <Grid item xs={12}>
-              <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" type="email" onChange={(e) => {
+              <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" type="email" value={email} onChange={(e) => {
                 setEmail(e.target.value);
               }} />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" type="password" onChange={(e) => {
+              <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" type="password" value={password} onChange={(e) => {
                 setPassword(e.target.value);
               }} />
             </Grid>
@@ -67,6 +84,15 @@ function LoginComponent( {}: any ) {
           }}>Login</Button>
         </CardActions>
       </Card>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2500}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert severity="error">{snackbarMessage}</Alert>
+      </Snackbar>
     </>
   );
 }
