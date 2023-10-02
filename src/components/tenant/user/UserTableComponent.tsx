@@ -15,9 +15,14 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+import UpdateUserModalComponent from './UpdateUserModalComponent';
+
 function UserTableComponent( {users, setUsers}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+
+  const [openUserUpdateModal, setOpenUserUpdateModal] = useState(false);
+  const [selectedUpdateUser, setSelectedUpdateUser] = useState<any>({});
 
   const togglePublic = (user: any) => {
     http.patch(`/user/${user.id}`, {
@@ -54,7 +59,8 @@ function UserTableComponent( {users, setUsers}: any ) {
   }
 
   const editUser = (user: any) => {
-    console.log(user);
+    setSelectedUpdateUser(user);
+    setOpenUserUpdateModal(true);
   }
 
   return (
@@ -116,6 +122,8 @@ function UserTableComponent( {users, setUsers}: any ) {
           </TableBody>
         </Table>
       </Card>
+
+      <UpdateUserModalComponent open={openUserUpdateModal} setOpen={setOpenUserUpdateModal} users={users} setUsers={setUsers} user={selectedUpdateUser} />
     </>
   );
 }
