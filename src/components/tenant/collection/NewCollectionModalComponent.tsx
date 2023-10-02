@@ -52,12 +52,17 @@ function NewCollectionModalComponent( {open, setOpen, collections, setCollection
   const createNewCollection = () => {
     http.post(`/collection`, {
       name: newCollectionName,
-      public_create: newCollectionPublicRead,
-      public_read: newCollectionPublicCreate,
+      public_create: newCollectionPublicCreate,
+      public_read: newCollectionPublicRead,
       public_update: newCollectionPublicUpdate,
       public_delete: newCollectionPublicDelete
     }).then((res) => {
       setCollections([...collections, res.data.collection]);
+
+      const appCollectionsState = [...AppContextState.collections, res.data.collection];
+      AppContextState.setCollections(appCollectionsState)
+      localStorage.setItem("collections", JSON.stringify(appCollectionsState));
+
       handleClose();
     });
   }

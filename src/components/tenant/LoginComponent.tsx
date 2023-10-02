@@ -42,12 +42,14 @@ function LoginComponent( {}: any ) {
       AppContextState.setAccessToken(res.data.access_token);
       AppContextState.setUser(res.data.user);
       AppContextState.setTenant(res.data.tenant);
-      AppContextState.setConfig(res.data.config);
+      AppContextState.setCollections(res.data.config.collections);
+      AppContextState.setCollectionFieldTypes(res.data.config.collection_field_types);
 
       localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
-      localStorage.setItem("config", JSON.stringify(res.data.config));
+      localStorage.setItem("collections", JSON.stringify(res.data.config.collections));
+      localStorage.setItem("collectionFieldTypes", JSON.stringify(res.data.config.collection_field_types));
 
       setEmail("");
       setPassword("");

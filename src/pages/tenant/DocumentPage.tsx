@@ -23,7 +23,6 @@ function DocumentPage() {
 
   useEffect(() => {
     http.get(`/collection/${collectionId}/document`).then((res) => {
-      console.log(res.data);
       setCollection(res.data.collection);
       setCollectionFields(res.data.collection.fields);
       setDocuments(res.data.documents);

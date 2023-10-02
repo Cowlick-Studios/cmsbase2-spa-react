@@ -112,6 +112,22 @@ function App() {
     return null;
   });
 
+  const [collectionFieldTypes, setCollectionFieldTypes]: any = useState(() => {
+    const localConfig = localStorage.getItem("collectionFieldTypes");
+    if(localConfig){
+      return JSON.parse(localConfig);
+    }
+    return null;
+  });
+
+  const [collections, setCollections]: any = useState(() => {
+    const localConfig = localStorage.getItem("collections");
+    if(localConfig){
+      return JSON.parse(localConfig);
+    }
+    return null;
+  });
+
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
@@ -122,12 +138,14 @@ function App() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     localStorage.removeItem("tenant");
-    localStorage.removeItem("config");
+    localStorage.removeItem("collections");
+    localStorage.removeItem("collectionFieldTypes");
 
     setAccessToken(null);
     setUser(null);
     setTenant(null);
-    setConfig(null);
+    setCollections(null);
+    setCollectionFieldTypes(null);
 
     navigate('/login');
   }
@@ -142,8 +160,10 @@ function App() {
           setUser,
           tenant,
           setTenant,
-          config,
-          setConfig
+          collections,
+          setCollections,
+          collectionFieldTypes,
+          setCollectionFieldTypes
         }}
       >
         <div>

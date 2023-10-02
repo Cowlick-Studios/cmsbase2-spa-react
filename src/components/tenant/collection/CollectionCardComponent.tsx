@@ -63,7 +63,7 @@ function CollectionCardComponent( {collection, collections, setCollections}: any
     }
 
     http.patch(`/collection/${collection.id}`, requestObject).then((res) => {
-      console.log(res);
+      // console.log(res);
     });
   }
 
@@ -72,6 +72,12 @@ function CollectionCardComponent( {collection, collections, setCollections}: any
       setCollections(collections.filter((collectionRecord: any) => {
         return collectionRecord.id !== collection.id;
       }))
+
+      const appCollectionsState = AppContextState.collections.filter((collectionRecord: any) => {
+        return collectionRecord.id !== collection.id;
+      });
+      AppContextState.setCollections(appCollectionsState);
+      localStorage.setItem("collections", JSON.stringify(appCollectionsState));
     });
   } 
 

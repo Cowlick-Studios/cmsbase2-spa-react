@@ -27,13 +27,6 @@ function MenuComponent( {children, enforce = true}: any ) {
   const location = useLocation();
 
   const [collectionOpen, setCollectionOpen] = useState(false);
-  const [collections, setCollections] = useState<any>([]);
-
-  useEffect(() => {
-    http.get(`/collection`).then((res) => {
-      setCollections(res.data.collections);
-    });
-  }, []);
 
   const isCurrentRoute = (path: string): boolean => {
     if(location.pathname === path){
@@ -84,7 +77,7 @@ function MenuComponent( {children, enforce = true}: any ) {
 
           <Collapse in={collectionOpen} timeout="auto" unmountOnExit>
             <List>
-              {collections.map((collection: any) => (
+              {AppContextState.collections.map((collection: any) => (
                 <ListItem disablePadding key={`menuCollectionList-${collection.id}`} onClick={() => {
                   navigate(`/collection/${collection.id}/documents`);
                 }}>
