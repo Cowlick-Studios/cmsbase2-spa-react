@@ -7,27 +7,25 @@ import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 
-function DashboardPage() {
+function UserPage() {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
-  const [dashboardData, setDashboardData] = useState<any>({});
-
-  useEffect(() => {
-    http.get(`/dashboard`).then((res) => {
-      setDashboardData(res.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   http.get(`/dashboard`).then((res) => {
+  //     setDashboardData(res.data);
+  //   });
+  // }, []);
 
   return (
     <>
       <Grid container gap={2}>
         <Grid item xs={4}>
-          <p>Dashboard Tenant</p>
+          <p>User</p>
         </Grid>
       </Grid>
     </>
   );
 }
 
-export {DashboardPage};
+export {UserPage};

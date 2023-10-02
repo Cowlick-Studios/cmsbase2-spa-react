@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
 import {http, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
-import { UserContext } from '../../../contexts/UserContext';
+import { UserContext } from '../../../contexts/admin/UserContext';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

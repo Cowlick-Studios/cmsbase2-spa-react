@@ -3,6 +3,8 @@ import { useNavigate, Link as A } from 'react-router-dom';
 import {http, axios} from '../services/http';
 import { AppContext } from '../contexts/AppContext';
 
+import Grid from '@mui/material/Grid';
+
 function _Component( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
@@ -14,4 +16,4 @@ function _Component( {}: any ) {
   );
 }
 
-export default _Component;
+export {_Component};

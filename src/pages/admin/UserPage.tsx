@@ -3,7 +3,7 @@ import { useNavigate, Link as A } from 'react-router-dom';
 
 import {axios, http} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../contexts/admin/UserContext';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';

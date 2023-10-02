@@ -33,10 +33,12 @@ function LoginComponent( {}: any ) {
       AppContextState.setAccessToken(res.data.access_token);
       AppContextState.setUser(res.data.user);
       AppContextState.setTenant(res.data.tenant);
+      AppContextState.setConfig(res.data.config);
 
       localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
+      localStorage.setItem("config", JSON.stringify(res.data.config));
 
       setEmail("");
       setPassword("");

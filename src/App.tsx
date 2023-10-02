@@ -77,7 +77,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 function App() {
-
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const [accessToken, setAccessToken]: any = useState(() => {
@@ -104,7 +104,14 @@ function App() {
     return null;
   });
 
-  const theme = useTheme();
+  const [config, setConfig]: any = useState(() => {
+    const localConfig = localStorage.getItem("config");
+    if(localConfig){
+      return JSON.parse(localConfig);
+    }
+    return null;
+  });
+
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
@@ -115,10 +122,12 @@ function App() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     localStorage.removeItem("tenant");
+    localStorage.removeItem("config");
 
     setAccessToken(null);
     setUser(null);
     setTenant(null);
+    setConfig(null);
 
     navigate('/login');
   }
@@ -132,7 +141,9 @@ function App() {
           user,
           setUser,
           tenant,
-          setTenant
+          setTenant,
+          config,
+          setConfig
         }}
       >
         <div>

@@ -6,5 +6,7 @@ export const AppContext = React.createContext({
   user: null,
   setUser: (value: any) => {},
   tenant: null,
-  setTenant: (value: any) => {}
+  setTenant: (value: any) => {},
+  config: null,
+  setConfig: (value: any) => {},
 });

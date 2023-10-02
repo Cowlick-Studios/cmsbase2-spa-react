@@ -9,6 +9,11 @@ import UnknownPage from './pages/UnknownPage';
 
 import RequireAuthComponent from './components/RequireAuthComponent';
 
+import { CollectionPage } from './pages/tenant/CollectionPage';
+import { DocumentPage } from './pages/tenant/DocumentPage';
+import { UserPage as TenantUserPage } from './pages/tenant/UserPage';
+import { SettingsPage } from './pages/tenant/SettingsPage';
+
 function Router() {
   return (
     <>
@@ -41,6 +46,30 @@ function Router() {
         <Route path="/" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <TenantDashboardPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/collection" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <CollectionPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/collection/:collectionId/documents" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <DocumentPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/user" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <TenantUserPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/settings" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <SettingsPage/>
           </RequireAuthComponent>
         }/>
 
