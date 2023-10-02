@@ -60,7 +60,7 @@ function MenuComponent( {children, enforce = true}: any ) {
           }}>
             <ListItemButton selected={isCurrentRoute('/collection')}>
               <ListItemIcon>
-                <FolderCopyIcon />
+                <FolderIcon />
               </ListItemIcon>
               <ListItemText primary="Collections" />
             </ListItemButton>
@@ -72,7 +72,7 @@ function MenuComponent( {children, enforce = true}: any ) {
           }}>
             <ListItemButton selected={isCurrentRoute('/document')}>
               <ListItemIcon>
-                <FolderIcon />
+                <FolderCopyIcon />
               </ListItemIcon>
               <ListItemText primary="Documents" />
               {collectionOpen ? <ExpandLess /> : <ExpandMore />}
