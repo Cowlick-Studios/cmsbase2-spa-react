@@ -17,6 +17,10 @@ import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Collapse from '@mui/material/Collapse';
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import MailIcon from '@mui/icons-material/Mail';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -56,7 +60,7 @@ function MenuComponent( {children, enforce = true}: any ) {
           }}>
             <ListItemButton selected={isCurrentRoute('/collection')}>
               <ListItemIcon>
-                <FolderIcon />
+                <FolderCopyIcon />
               </ListItemIcon>
               <ListItemText primary="Collections" />
             </ListItemButton>
@@ -68,7 +72,7 @@ function MenuComponent( {children, enforce = true}: any ) {
           }}>
             <ListItemButton selected={isCurrentRoute('/document')}>
               <ListItemIcon>
-                <InsertDriveFileIcon />
+                <FolderIcon />
               </ListItemIcon>
               <ListItemText primary="Documents" />
               {collectionOpen ? <ExpandLess /> : <ExpandMore />}
@@ -83,7 +87,7 @@ function MenuComponent( {children, enforce = true}: any ) {
                 }}>
                   <ListItemButton selected={isCurrentRoute(`/collection/${collection.id}/documents`)} sx={{ pl: 3 }}>
                     <ListItemIcon>
-                      <InsertDriveFileIcon />
+                      <DescriptionIcon />
                     </ListItemIcon>
                     <ListItemText primary={collection.name} />
                   </ListItemButton>
@@ -91,6 +95,28 @@ function MenuComponent( {children, enforce = true}: any ) {
               ))}
             </List>
           </Collapse>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/media');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/media')}>
+              <ListItemIcon>
+                <PermMediaIcon />
+              </ListItemIcon>
+              <ListItemText primary="Media" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/mail');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/mail')}>
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Mail" />
+            </ListItemButton>
+          </ListItem>
 
           <ListItem disablePadding onClick={() => {
             navigate('/user');

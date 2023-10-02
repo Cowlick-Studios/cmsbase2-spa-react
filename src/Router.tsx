@@ -1,16 +1,20 @@
 import { Routes, Route } from 'react-router-dom'
 
+import RequireAuthComponent from './components/RequireAuthComponent';
+
+// Admin
 import {DashboardPage as AdminDashboardPage} from './pages/admin/DashboardPage';
-import {DashboardPage as TenantDashboardPage } from './pages/tenant/DashboardPage';
 import TenantPage from './pages/admin/TenantPage';
 import UserPage from './pages/admin/UserPage';
 import LoginPage from './pages/LoginPage';
 import UnknownPage from './pages/UnknownPage';
 
-import RequireAuthComponent from './components/RequireAuthComponent';
-
+// Tenant
+import {DashboardPage as TenantDashboardPage } from './pages/tenant/DashboardPage';
 import { CollectionPage } from './pages/tenant/CollectionPage';
 import { DocumentPage } from './pages/tenant/DocumentPage';
+import { MediaPage } from './pages/tenant/MediaPage';
+import { EmailPage } from './pages/tenant/EmailPage';
 import { UserPage as TenantUserPage } from './pages/tenant/UserPage';
 import { SettingsPage } from './pages/tenant/SettingsPage';
 
@@ -58,6 +62,18 @@ function Router() {
         <Route path="/collection/:collectionId/documents" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <DocumentPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/media" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <MediaPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/mail" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <EmailPage/>
           </RequireAuthComponent>
         }/>
 
