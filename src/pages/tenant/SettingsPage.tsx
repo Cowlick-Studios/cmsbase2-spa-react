@@ -7,6 +7,8 @@ import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 
+import { CollectionFieldTypesComponent } from '../../components/tenant/settings/CollectionFieldTypesComponent';
+
 function SettingsPage() {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
@@ -19,9 +21,9 @@ function SettingsPage() {
 
   return (
     <>
-      <Grid container gap={2}>
-        <Grid item xs={4}>
-          <p>Settings</p>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <CollectionFieldTypesComponent/>
         </Grid>
       </Grid>
     </>
