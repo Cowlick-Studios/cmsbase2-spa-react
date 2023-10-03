@@ -5,3 +5,9 @@
 .hoverClick:hover {
   cursor: pointer;
 }
+
+.imageResize {
+  object-fit: contain;
+  max-width: 100%;
+  height: auto;
+}
