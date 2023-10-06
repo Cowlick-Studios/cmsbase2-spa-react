@@ -12,18 +12,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function TotalServerDiskUsageComponent({dashboardData}: any) {
+function FileStorageLimitComponent({dashboardData}: any) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
-  const [totalDiskSpace, setTotalDiskSpace] = useState(0);
-  const [usedDiskSpace, setUsedDiskSpace] = useState(0);
-  const [diskUsagePercentage, setDiskUsagePercentage] = useState(0);
+  const [storageLimit, setStorageLimit] = useState(0);
+  const [usedStorage, setUsedStorage] = useState(0);
+  const [usedStorageDecimal, setUsedStorageDecimal] = useState(0);
 
   useEffect(() => {
-    setUsedDiskSpace(bytesToGb(dashboardData.total_disk_space) - bytesToGb(dashboardData.free_disk_space));
-    setTotalDiskSpace(bytesToGb(dashboardData.total_disk_space));
-    setDiskUsagePercentage(((bytesToGb(dashboardData.total_disk_space) - bytesToGb(dashboardData.free_disk_space)) / bytesToGb(dashboardData.total_disk_space)));
+    setStorageLimit(dashboardData.storage_limit_file);
+    setUsedStorage(bytesToGb(dashboardData.file_usage));
+    setUsedStorageDecimal(bytesToGb(dashboardData.file_usage) / dashboardData.storage_limit_file);
   }, [dashboardData])
 
   return (
@@ -31,7 +31,7 @@ function TotalServerDiskUsageComponent({dashboardData}: any) {
       <Card>
         <CardContent>
           <Typography gutterBottom>
-            Total server disk usage
+            File Usage
           </Typography>
           
           <Grid container sx={{
@@ -39,18 +39,18 @@ function TotalServerDiskUsageComponent({dashboardData}: any) {
           }}>
 
             <Grid item xs={12}>
-              <LinearProgress variant="determinate" value={diskUsagePercentage * 100} color={(diskUsagePercentage * 100) > 80 ? 'error' : 'primary'} />
+              <LinearProgress variant="determinate" value={(usedStorageDecimal * 100)} color={(usedStorageDecimal * 100) > 80 ? 'error' : 'primary'} />
             </Grid>
 
             <Grid item xs={6}>
               <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
-                {numeral(usedDiskSpace).format('0,0.00')} GB / {numeral(totalDiskSpace).format('0,0.00')} GB
+                {numeral(usedStorage).format('0,0.00')} GB / {numeral(storageLimit).format('0,0.00')} GB
               </Typography>
             </Grid>
 
             <Grid item xs={6}>
               <Typography sx={{ fontSize: 12 }} color="text.secondary" align='right' gutterBottom>
-                {(diskUsagePercentage * 100) > 1 ? numeral((diskUsagePercentage * 100)).format('0,0.00') : '< 1'} %
+                {(usedStorageDecimal * 100) > 1 ? numeral((usedStorageDecimal * 100)).format('0,0.00') : '< 1'} %
               </Typography>
             </Grid>
           </Grid>
@@ -60,4 +60,5 @@ function TotalServerDiskUsageComponent({dashboardData}: any) {
   );
 }
 
-export default TotalServerDiskUsageComponent;
+export default FileStorageLimitComponent;
+

@@ -30,15 +30,18 @@ function LoginComponent( {}: any ) {
       email: email,
       password: password
     }).then((res) => {
+
+      console.log(res.data);
+
       AppContextState.setAccessToken(res.data.access_token);
       AppContextState.setUser(res.data.user);
-      AppContextState.setTenant(res.data.tenant);
-      AppContextState.setConfig(res.data.config);
+      AppContextState.setTenant(res.data?.tenant);
+      // AppContextState.setConfig(res.data?.config);
 
       localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
-      localStorage.setItem("config", JSON.stringify(res.data.config));
+      localStorage.setItem("tenant", JSON.stringify(res.data?.tenant));
+      // localStorage.setItem("config", JSON.stringify(res.data?.config));
 
       setEmail("");
       setPassword("");
@@ -50,7 +53,7 @@ function LoginComponent( {}: any ) {
       navigate('/admin');
     }).catch((error) => {
       setSnackbarType("error");
-      setSnackbarMessage(error.response.data.message);
+      setSnackbarMessage(error.response?.data?.message);
       setSnackbarOpen(true);
 
       setEmail("");

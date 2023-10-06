@@ -100,7 +100,7 @@ function EmailCardFieldsComponent( {emailSubmission}: any ) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {fields.map((field: any) => (
+            {fields?.map((field: any) => (
               <TableRow
                 key={field.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
