@@ -8,22 +8,28 @@ import { AppContext } from '../../contexts/AppContext';
 import Grid from '@mui/material/Grid';
 
 import { CollectionFieldTypesComponent } from '../../components/tenant/settings/CollectionFieldTypesComponent';
+import { RequestLoggingComponent } from '../../components/tenant/settings/RequestLoggingComponent';
 
 function SettingsPage() {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
-  // useEffect(() => {
-  //   http.get(`/dashboard`).then((res) => {
-  //     setDashboardData(res.data);
-  //   });
-  // }, []);
+  const [settings, setSettings] = useState<any>([]);
+
+  useEffect(() => {
+    http.get(`/setting`).then((res) => {
+      setSettings(res.data.settings);
+    });
+  }, []);
 
   return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <CollectionFieldTypesComponent/>
+        </Grid>
+        <Grid item xs={12}>
+          <RequestLoggingComponent settings={settings}/>
         </Grid>
       </Grid>
     </>

@@ -16,6 +16,7 @@ import { DocumentPage } from './pages/tenant/DocumentPage';
 import { MediaPage } from './pages/tenant/MediaPage';
 import { EmailPage } from './pages/tenant/EmailPage';
 import { UserPage as TenantUserPage } from './pages/tenant/UserPage';
+import { RequestPage } from './pages/tenant/RequestPage';
 import { SettingsPage } from './pages/tenant/SettingsPage';
 
 function Router() {
@@ -80,6 +81,12 @@ function Router() {
         <Route path="/user" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <TenantUserPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/request" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <RequestPage/>
           </RequireAuthComponent>
         }/>
 

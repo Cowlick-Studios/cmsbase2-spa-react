@@ -21,6 +21,7 @@ import PermMediaIcon from '@mui/icons-material/PermMedia';
 import MailIcon from '@mui/icons-material/Mail';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import DescriptionIcon from '@mui/icons-material/Description';
+import HttpIcon from '@mui/icons-material/Http';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -126,6 +127,17 @@ function MenuComponent( {children, enforce = true}: any ) {
                 <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary="Users" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/request');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/request')}>
+              <ListItemIcon>
+                <HttpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Requests" />
             </ListItemButton>
           </ListItem>
 

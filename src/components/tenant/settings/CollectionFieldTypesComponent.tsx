@@ -27,7 +27,6 @@ function CollectionFieldTypesComponent( {}: any ) {
 
   useEffect(() => {
     http.get(`/collection_field_type`).then((res) => {
-      console.log(res.data.types);
       setCollectionFieldTypes(res.data.types);
     });
   }, []);
@@ -63,7 +62,7 @@ function CollectionFieldTypesComponent( {}: any ) {
                       <TableRow>
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell>Datatype</TableCell>
+                        <TableCell>SQL Datatype</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
