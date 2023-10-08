@@ -14,14 +14,19 @@ function RequestTimelineComponent( {requests, pastDay}: any ) {
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   const [componentWidth, setComponentWidth] = useState<any>(500);
+  const [numberOfRequestsHour, setNumberOfRequestsHour] = useState<any>([]);
 
   useEffect(() => {
 
+    console.log(pastDay);
     console.log(groupByHour(pastDay));
+
+    setNumberOfRequestsHour(groupByHour(pastDay));
 
     if (componentRef.current !== null) {
       setComponentWidth(componentRef.current.offsetWidth);
     }
+
   }, [componentRef, requests, pastDay]);
 
   const groupByHour = (requests: any) => {
@@ -36,19 +41,23 @@ function RequestTimelineComponent( {requests, pastDay}: any ) {
       }
     }
 
-    const sortedHours = [];
+    let sortedHours: any = [];
 
-    return hours;
+    for (const hourRecords in hours) {
+      sortedHours = [...sortedHours, hourRecords.length];
+    }
+
+    return sortedHours;
   }
 
   return (
     <>
       <Card ref={componentRef}>
         <LineChart
-          xAxis={[{ data: Array.from(Array(24).keys()) }]}
+          xAxis={[{ data: Array.from(Array(numberOfRequestsHour.length).keys()) }]}
           series={[
             {
-              data: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+              data: numberOfRequestsHour,
             },
           ]}
           width={componentWidth}

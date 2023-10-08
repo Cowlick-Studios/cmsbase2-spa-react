@@ -28,10 +28,10 @@ function RequestPage() {
   return (
     <>
       <Grid container gap={2}>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <RequestTimelineComponent requests={requests} pastDay={pastDay} />
-        </Grid>
-        <Grid>
+        </Grid> */}
+        <Grid item xs={12}>
           <RequestTableComponent requests={requests} />
         </Grid>
       </Grid>

@@ -33,9 +33,11 @@ function EmailCardComponent( {emailSubmission, emailSubmissions, setEmailSubmiss
   const [selectedAdmins, setSelectedAdmins] = useState<any>([]);
 
   useEffect(() => {
-    setSelectedAdmins(emailSubmission.recipients.map((adminUser: any) => {
-      return adminUser.id;
-    }));
+    if(emailSubmission.recipients){
+      setSelectedAdmins(emailSubmission?.recipients?.map((adminUser: any) => {
+        return adminUser.id;
+      }));
+    }
   }, [emailSubmission]);
 
   const deleteEmailSubmission = (emailSubmission: any) => {
@@ -85,7 +87,7 @@ function EmailCardComponent( {emailSubmission, emailSubmissions, setEmailSubmiss
                   onChange={selectAdminUser}
                   renderValue={(selected: any[]) => (
                     <div>
-                      {selected.map((value: any) => (
+                      {selected?.map((value: any) => (
                         <Chip key={value} label={adminUsers.find((adminUser: any) => {
                           return adminUser.id === value;
                         }).name } />
@@ -93,7 +95,7 @@ function EmailCardComponent( {emailSubmission, emailSubmissions, setEmailSubmiss
                     </div>
                   )}
                 >
-                  {adminUsers.map((adminUser: any) => (
+                  {adminUsers?.map((adminUser: any) => (
                     <MenuItem
                       key={adminUser.id}
                       value={adminUser.id}
