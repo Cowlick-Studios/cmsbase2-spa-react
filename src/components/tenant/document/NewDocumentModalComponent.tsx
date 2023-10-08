@@ -74,7 +74,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
   const saveNewDocument = () => {
     console.log(newDocumentRequestObject);
 
-    http.post(`/collection/${collection.id}/document`, newDocumentRequestObject).then((res) => {
+    http.post(`/collection/${collection.name}/document`, newDocumentRequestObject).then((res) => {
       setDocuments([res.data.document, ...documents]);
       handleClose();
     });

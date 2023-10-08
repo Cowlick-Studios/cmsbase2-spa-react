@@ -83,10 +83,10 @@ function MenuComponent( {children, enforce = true}: any ) {
           <Collapse in={collectionOpen} timeout="auto" unmountOnExit>
             <List>
               {AppContextState.collections.map((collection: any) => (
-                <ListItem disablePadding key={`menuCollectionList-${collection.id}`} onClick={() => {
-                  navigate(`/collection/${collection.id}/documents`);
+                <ListItem disablePadding key={`menuCollectionList-${collection.name}`} onClick={() => {
+                  navigate(`/collection/${collection.name}/documents`);
                 }}>
-                  <ListItemButton selected={isCurrentRoute(`/collection/${collection.id}/documents`)} sx={{ pl: 3 }}>
+                  <ListItemButton selected={isCurrentRoute(`/collection/${collection.name}/documents`)} sx={{ pl: 3 }}>
                     <ListItemIcon>
                       <DescriptionIcon />
                     </ListItemIcon>

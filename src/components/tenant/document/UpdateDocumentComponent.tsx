@@ -73,7 +73,7 @@ function UpdateDocumentComponent( {open, setOpen, collection, collectionFields, 
   }
 
   const saveNewDocument = () => {
-    http.patch(`/collection/${collection.id}/document/${document.id}`, newDocumentRequestObject).then((res) => {
+    http.patch(`/collection/${collection.name}/document/${document.id}`, newDocumentRequestObject).then((res) => {
       console.log(res.data.document);
       setDocuments(documents.map((documentRecord: any) => {
         if(documentRecord.id === res.data.document.id){

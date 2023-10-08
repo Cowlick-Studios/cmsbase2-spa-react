@@ -27,7 +27,7 @@ function DocumentTableComponent( {collection, collectionFields, documents, setDo
   const [selectedUpdateDocument, setSelectedUpdateDocument] = useState<any>({});
 
   const deleteDocument = (document: any) => {
-    http.delete(`/collection/${collection.id}/document/${document.id}`).then((res) => {
+    http.delete(`/collection/${collection.name}/document/${document.id}`).then((res) => {
       setDocuments(documents.filter((documentRecord: any) => {
         return documentRecord.id !== document.id;
       }));
@@ -35,7 +35,7 @@ function DocumentTableComponent( {collection, collectionFields, documents, setDo
   }
 
   const publishDocument = (document: any) => {
-    http.patch(`/collection/${collection.id}/document/${document.id}`, {
+    http.patch(`/collection/${collection.name}/document/${document.id}`, {
       published: true
     }).then((res) => {
       setDocuments(documents.map((documentRecord: any) => {
@@ -48,7 +48,7 @@ function DocumentTableComponent( {collection, collectionFields, documents, setDo
   }
 
   const unpublishDocument = (document: any) => {
-    http.patch(`/collection/${collection.id}/document/${document.id}`, {
+    http.patch(`/collection/${collection.name}/document/${document.id}`, {
       published: false
     }).then((res) => {
       setDocuments(documents.map((documentRecord: any) => {

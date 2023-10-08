@@ -60,7 +60,7 @@ function Router() {
           </RequireAuthComponent>
         }/>
 
-        <Route path="/collection/:collectionId/documents" element={
+        <Route path="/collection/:collectionName/documents" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <DocumentPage/>
           </RequireAuthComponent>

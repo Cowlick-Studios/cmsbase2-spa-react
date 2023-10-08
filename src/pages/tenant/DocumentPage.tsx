@@ -14,7 +14,7 @@ import { NewDocumentModalComponent } from '../../components/tenant/document/NewD
 function DocumentPage() {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
-  let {collectionId} = useParams();
+  let {collectionName} = useParams();
 
   const [collection, setCollection] = useState<any>({});
   const [collectionFields, setCollectionFields] = useState<any>([]);
@@ -22,12 +22,12 @@ function DocumentPage() {
   const [openNewDocument, setOpenNewDocument] = useState(false);
 
   useEffect(() => {
-    http.get(`/collection/${collectionId}/document`).then((res) => {
+    http.get(`/collection/${collectionName}/document`).then((res) => {
       setCollection(res.data.collection);
       setCollectionFields(res.data.collection.fields);
       setDocuments(res.data.documents);
     });
-  }, [collectionId]);
+  }, [collectionName]);
 
   return (
     <>
