@@ -22,6 +22,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import DescriptionIcon from '@mui/icons-material/Description';
 import HttpIcon from '@mui/icons-material/Http';
+import WebIcon from '@mui/icons-material/Web';
+import LooksOneIcon from '@mui/icons-material/LooksOne';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -53,6 +56,39 @@ function MenuComponent( {children, enforce = true}: any ) {
                 <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/client_analytics');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/client_analytics')}>
+              <ListItemIcon>
+                <AnalyticsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Client Analytics" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/items');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/items')}>
+              <ListItemIcon>
+                <LooksOneIcon />
+              </ListItemIcon>
+              <ListItemText primary="Items" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/pages');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/pages')}>
+              <ListItemIcon>
+                <WebIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pages" />
             </ListItemButton>
           </ListItem>
 

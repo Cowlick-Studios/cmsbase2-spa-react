@@ -28,15 +28,25 @@ function DashboardPage() {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <DatabaseStorageLimitComponent dashboardData={dashboardData}/>
-        </Grid>
-        <Grid item xs={4}>
-          <FileStorageLimitComponent dashboardData={dashboardData}/>
-        </Grid>
-        <Grid item xs={4}>
-          <DailyRequestCountComponent dashboardData={dashboardData}/>
-        </Grid>
+        
+        {Object.keys(dashboardData).length > 0 && dashboardData.database_usage !== null ? (
+          <Grid item xs={4}>
+            <DatabaseStorageLimitComponent dashboardData={dashboardData}/>
+          </Grid>
+        ) : (<></>)}
+
+        {Object.keys(dashboardData).length > 0 && dashboardData.file_usage !== null ? (
+          <Grid item xs={4}>
+            <FileStorageLimitComponent dashboardData={dashboardData}/>
+          </Grid>
+        ) : (<></>)}
+
+        {Object.keys(dashboardData).length > 0 && dashboardData.daily_request_count !== null ? (
+          <Grid item xs={4}> 
+            <DailyRequestCountComponent dashboardData={dashboardData}/>
+          </Grid>
+        ) : (<></>)}
+
       </Grid>
     </>
   );
