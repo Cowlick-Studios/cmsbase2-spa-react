@@ -38,20 +38,24 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
       }
     }));
 
+    const newDocumentRequestObjectTEMP: any = {};
+
     for(const field of sortedCollectionFields){
       if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type.name)){
-        newDocumentRequestObject[field.name] = 0;
+        newDocumentRequestObjectTEMP[field.name] = 0;
       } else if(['char', 'string', 'tinyText', 'text', 'mediumText', 'longText'].includes(field.type.name)){
-        newDocumentRequestObject[field.name] = "";
+        newDocumentRequestObjectTEMP[field.name] = "";
       } else if(field.type.name === 'boolean'){
-        newDocumentRequestObject[field.name] = false;
+        newDocumentRequestObjectTEMP[field.name] = false;
       } else {
-        newDocumentRequestObject[field.name] = null;
+        newDocumentRequestObjectTEMP[field.name] = null;
       }
     }
 
-    setNewDocumentRequestObject(newDocumentRequestObject);
-  }, [collection, collectionFields]);
+    setNewDocumentRequestObject(newDocumentRequestObjectTEMP);
+    
+
+  }, [collection, collectionFields, open]);
 
   const handleOpen = () => {
     setOpen(true);

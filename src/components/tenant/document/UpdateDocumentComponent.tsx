@@ -39,20 +39,22 @@ function UpdateDocumentComponent( {open, setOpen, collection, collectionFields, 
       }
     }));
 
+    const newDocumentRequestObjectTEMP: any = {};
+
     for(const field of sortedCollectionFields){
       if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type.name)){
-        newDocumentRequestObject[field.name] = Number(document[field.name]);
+        newDocumentRequestObjectTEMP[field.name] = Number(document[field.name]);
       } else if(['char', 'string', 'tinyText', 'text', 'mediumText', 'longText'].includes(field.type.name)){
-        newDocumentRequestObject[field.name] = String(document[field.name]);
+        newDocumentRequestObjectTEMP[field.name] = String(document[field.name]);
       } else if(field.type.name === 'boolean'){
-        newDocumentRequestObject[field.name] = Boolean(document[field.name]);
+        newDocumentRequestObjectTEMP[field.name] = Boolean(document[field.name]);
       } else {
-        newDocumentRequestObject[field.name] = document[field.name];
+        newDocumentRequestObjectTEMP[field.name] = document[field.name];
       }
     }
 
-    setNewDocumentRequestObject(newDocumentRequestObject);
-  }, [collection, collectionFields]);
+    setNewDocumentRequestObject(newDocumentRequestObjectTEMP);
+  }, [collection, collectionFields, open]);
 
   const handleOpen = () => {
     setOpen(true);
