@@ -92,8 +92,9 @@ function MenuComponent( {children, enforce = true}: any ) {
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding onClick={() => {
+          {/* <ListItem disablePadding onClick={() => {
             navigate('/collection');
+            setCollectionOpen(!collectionOpen);
           }}>
             <ListItemButton selected={isCurrentRoute('/collection')}>
               <ListItemIcon>
@@ -101,17 +102,27 @@ function MenuComponent( {children, enforce = true}: any ) {
               </ListItemIcon>
               <ListItemText primary="Collections" />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
 
           <ListItem disablePadding onClick={() => {
-            // navigate('/document');
-            setCollectionOpen(!collectionOpen);
+
+            if(location.pathname.includes('/collection/')){
+              navigate('/collection');
+              setCollectionOpen(true);
+            } else if(location.pathname.includes('/collection')){
+              navigate('/collection');
+              setCollectionOpen(!collectionOpen);
+            } else {
+              navigate('/collection');
+              setCollectionOpen(true);
+            }
+
           }}>
             <ListItemButton selected={isCurrentRoute('/document')}>
               <ListItemIcon>
                 <FolderCopyIcon />
               </ListItemIcon>
-              <ListItemText primary="Documents" />
+              <ListItemText primary="Collections" />
               {collectionOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
           </ListItem>
@@ -124,7 +135,7 @@ function MenuComponent( {children, enforce = true}: any ) {
                 }}>
                   <ListItemButton selected={isCurrentRoute(`/collection/${collection.name}/documents`)} sx={{ pl: 3 }}>
                     <ListItemIcon>
-                      <DescriptionIcon />
+                      <FolderIcon />
                     </ListItemIcon>
                     <ListItemText primary={collection.name} />
                   </ListItemButton>
