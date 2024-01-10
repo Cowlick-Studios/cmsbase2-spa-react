@@ -104,6 +104,14 @@ function App() {
     return null;
   });
 
+  const [url, setUrl]: any = useState(() => {
+    const localUrl = localStorage.getItem("url");
+    if(localUrl){
+      return JSON.parse(localUrl);
+    }
+    return null;
+  });
+
   const [config, setConfig]: any = useState(() => {
     const localConfig = localStorage.getItem("config");
     if(localConfig){
@@ -138,6 +146,7 @@ function App() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     localStorage.removeItem("tenant");
+    localStorage.removeItem("uri");
     localStorage.removeItem("collections");
     localStorage.removeItem("collectionFieldTypes");
 
@@ -160,6 +169,8 @@ function App() {
           setUser,
           tenant,
           setTenant,
+          url,
+          setUrl,
           collections,
           setCollections,
           collectionFieldTypes,

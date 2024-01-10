@@ -18,6 +18,7 @@ function LoginComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
+  const [url, setUrl] = useState("");
   const [tenant, setTenant] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,12 +43,14 @@ function LoginComponent( {}: any ) {
       AppContextState.setAccessToken(res.data.access_token);
       AppContextState.setUser(res.data.user);
       AppContextState.setTenant(res.data.tenant);
+      AppContextState.setUrl(res.data.url);
       AppContextState.setCollections(res.data.config.collections);
       AppContextState.setCollectionFieldTypes(res.data.config.collection_field_types);
 
       localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
+      localStorage.setItem("url", JSON.stringify(res.data.url));
       localStorage.setItem("collections", JSON.stringify(res.data.config.collections));
       localStorage.setItem("collectionFieldTypes", JSON.stringify(res.data.config.collection_field_types));
 

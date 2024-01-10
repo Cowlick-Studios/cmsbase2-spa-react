@@ -7,6 +7,8 @@ export const AppContext = React.createContext({
   setUser: (value: any) => {},
   tenant: null,
   setTenant: (value: any) => {},
+  url: null,
+  setUrl: (value: any) => {},
   collections: null,
   setCollections: (value: any) => {},
   collectionFieldTypes: null,
