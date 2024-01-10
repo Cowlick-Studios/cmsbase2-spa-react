@@ -37,7 +37,7 @@ function EmailPage( {}: any ) {
         <Grid item xs={12}>
           <Button variant="contained" onClick={() => {
             setOpenNewEmailSubmissionModal(true);
-          }}>New Collection</Button>
+          }}>New Email Submission</Button>
         </Grid>
         <Grid container item xs={12} spacing={2}>
           {emailSubmissions.map((emailSubmission: any) => (
