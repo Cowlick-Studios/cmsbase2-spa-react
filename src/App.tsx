@@ -142,6 +142,10 @@ function App() {
     setOpen(!open);
   }
 
+  document.addEventListener('response_401', (event: any) => {
+    logout();
+  });
+
   const logout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");

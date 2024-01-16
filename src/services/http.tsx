@@ -38,18 +38,18 @@ axiosInstance.interceptors.request.use((request) => {
 	return request;
 });
 
-// axiosInstance.interceptors.response.use((response) => { 
-//   return response;
-// }, (error) => {
-//   switch(error.response.status) {
-//     case 401:
-//       document.dispatchEvent(new CustomEvent('response_401', {
-//         detail: { message: error.response.data.message },
-//       }));
-//       break;
-//   }
-//   return error.response;
-// });
+axiosInstance.interceptors.response.use((response) => { 
+  return response;
+}, (error) => {
+  switch(error.response.status) {
+    case 401:
+      document.dispatchEvent(new CustomEvent('response_401', {
+        detail: { message: error.response.data.message },
+      }));
+      break;
+  }
+  return error.response;
+});
 
 export { axiosInstance as http };
 export { axios };
