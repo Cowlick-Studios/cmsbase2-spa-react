@@ -23,11 +23,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-function RequestLoggingComponent( {settings}: any ) {
+function ClientRequestLoggingComponent( {settings}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
-  const settingName = "request_logging";
+  const settingName = "client_request_logging";
 
   const [enableLogging, setEnableLogging] = useState(false);
 
@@ -51,10 +51,11 @@ function RequestLoggingComponent( {settings}: any ) {
   }
 
   const clearLogs = () => {
-    http.delete(`/request`).then((res) => {
-      // console.log(res.data);
-    });
+    // http.delete(`/request`).then((res) => {
+    //   // console.log(res.data);
+    // });
   }
+
   return (
     <>
       <Card variant='outlined'>
@@ -63,13 +64,13 @@ function RequestLoggingComponent( {settings}: any ) {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Request Logging
+                Client Request Logging
               </Typography>
             </Grid>
 
             <Grid item xs={12}>
               <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
-                Toggle the logging of requests to the system and clear request log data.
+                Enable the logging of client requests for client analytics and clear request log data.
               </Typography>
             </Grid>
 
@@ -77,11 +78,11 @@ function RequestLoggingComponent( {settings}: any ) {
               <FormControlLabel control={<Switch checked={enableLogging} onChange={(e) => {
                 setEnableLogging(e.target.checked);
                 updateSetting(e.target.checked);
-              }} />} label="Log request data" />
+              }} />} label="Log client request data" />
             </Grid>
 
             <Grid container item xs={6} justifyContent={'center'}>
-              <Button variant="contained" onClick={clearLogs} color="error">Clear Logs</Button>
+              <Button variant="contained" onClick={clearLogs} color="error">Clear Logs & Analytics</Button>
             </Grid>
           </Grid>
         </CardContent>
@@ -90,4 +91,4 @@ function RequestLoggingComponent( {settings}: any ) {
   );
 }
 
-export {RequestLoggingComponent};
+export {ClientRequestLoggingComponent};

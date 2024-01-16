@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 
 import { CollectionFieldTypesComponent } from '../../components/tenant/settings/CollectionFieldTypesComponent';
 import { RequestLoggingComponent } from '../../components/tenant/settings/RequestLoggingComponent';
+import { ClientRequestLoggingComponent } from '../../components/tenant/settings/ClientRequestLoggingComponent';
 
 function SettingsPage() {
   const navigate = useNavigate();
@@ -30,6 +31,9 @@ function SettingsPage() {
         </Grid>
         <Grid item xs={12}>
           <RequestLoggingComponent settings={settings}/>
+        </Grid>
+        <Grid item xs={12}>
+          <ClientRequestLoggingComponent settings={settings}/>
         </Grid>
       </Grid>
     </>
