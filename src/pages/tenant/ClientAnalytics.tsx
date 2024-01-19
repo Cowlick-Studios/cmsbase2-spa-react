@@ -8,9 +8,11 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert, {AlertProps} from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
+import { CopyBlock, a11yLight } from 'react-code-blocks';
 
 import { ViewVisitorChartComponent } from '../../components/tenant/ClientAnalytics/ViewVisitorChartComponent';
 import { ViewVisitorMapComponent } from '../../components/tenant/ClientAnalytics/ViewVisitorMapComponent';
+import { AnalyticsScriptComponent } from '../../components/tenant/ClientAnalytics/AnalyticsScriptComponent';
 
 function ClientAnalyticsPage( {}: any ) {
   const navigate = useNavigate();
@@ -18,42 +20,14 @@ function ClientAnalyticsPage( {}: any ) {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-
-  const copyAnalyticsScript = () => {
-    navigator.clipboard.writeText(`
-<script>
-  // Initialize the agent at application startup.
-  const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3')
-    .then(FingerprintJS => FingerprintJS.load());
-
-  // Get the visitor identifier when you need it.
-  fpPromise
-    .then(fp => fp.get())
-    .then(result => {
-      // Send request data
-      fetch("${AppContextState.url}/tenant/${AppContextState.tenant}/analytics/request", {
-        method: "POST",
-        body: JSON.stringify({
-          fingerprint: result.visitorId
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          "Accept": "application/json"
-        }
-      });
-    })
-</script>
-    `);
-
-    setSnackbarMessage("Copied analytics script to clipboard");
-    setSnackbarOpen(true);
-  }
+  const [analyticsScript, setAnalyticsScript] = useState("");
 
   return (
     <>
       <Grid container spacing={2}>
+
         <Grid item xs={12}>
-          <Button variant="contained" onClick={() => {copyAnalyticsScript()}}>Copy Embedded Analytics Script Tag</Button>
+          <AnalyticsScriptComponent/>
         </Grid>
 
         <Grid item xs={12}>
@@ -71,15 +45,6 @@ function ClientAnalyticsPage( {}: any ) {
         </Grid>
 
       </Grid>
-
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={2500}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert severity="info">{snackbarMessage}</Alert>
-      </Snackbar>
     </>
   );
 }
