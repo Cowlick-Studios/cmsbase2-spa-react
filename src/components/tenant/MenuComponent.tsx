@@ -25,6 +25,7 @@ import HttpIcon from '@mui/icons-material/Http';
 import WebIcon from '@mui/icons-material/Web';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
+import ArticleIcon from '@mui/icons-material/Article';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -35,6 +36,7 @@ function MenuComponent( {children, enforce = true}: any ) {
   const location = useLocation();
 
   const [collectionOpen, setCollectionOpen] = useState(false);
+  const [pageOpen, setPageOpen] = useState(false);
 
   const isCurrentRoute = (path: string): boolean => {
     if(location.pathname === path){
@@ -82,27 +84,43 @@ function MenuComponent( {children, enforce = true}: any ) {
           </ListItem>
 
           <ListItem disablePadding onClick={() => {
-            navigate('/pages');
-          }}>
-            <ListItemButton selected={isCurrentRoute('/pages')}>
+            if(location.pathname.includes('/page/')){
+              navigate('/page');
+              setPageOpen(true);
+            } else if(location.pathname.includes('/page')){
+              navigate('/page');
+              setPageOpen(!pageOpen);
+            } else {
+              navigate('/page');
+              setPageOpen(true);
+            }
+
+            }}>
+            <ListItemButton selected={isCurrentRoute('/page')}>
               <ListItemIcon>
                 <WebIcon />
               </ListItemIcon>
               <ListItemText primary="Pages" />
+              {pageOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
           </ListItem>
 
-          {/* <ListItem disablePadding onClick={() => {
-            navigate('/collection');
-            setCollectionOpen(!collectionOpen);
-          }}>
-            <ListItemButton selected={isCurrentRoute('/collection')}>
-              <ListItemIcon>
-                <FolderIcon />
-              </ListItemIcon>
-              <ListItemText primary="Collections" />
-            </ListItemButton>
-          </ListItem> */}
+          <Collapse in={pageOpen} timeout="auto" unmountOnExit>
+            <List>
+              {AppContextState.pages.map((page: any) => (
+                <ListItem disablePadding key={`menuCollectionList-${page.name}`} onClick={() => {
+                  navigate(`/page/${page.name}/document`);
+                }}>
+                  <ListItemButton selected={isCurrentRoute(`/page/${page.name}/document`)} sx={{ pl: 3 }}>
+                    <ListItemIcon>
+                      <ArticleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={page.name} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
 
           <ListItem disablePadding onClick={() => {
 

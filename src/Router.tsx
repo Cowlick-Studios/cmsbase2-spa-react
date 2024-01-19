@@ -21,6 +21,7 @@ import { SettingsPage } from './pages/tenant/SettingsPage';
 import { PagesPage } from './pages/tenant/PagesPage';
 import { ItemsPage } from './pages/tenant/ItemsPage';
 import { ClientAnalyticsPage } from './pages/tenant/ClientAnalytics';
+import { PagesDocumentPage } from './pages/tenant/PagesDocumentPage';
 
 function Router() {
   return (
@@ -69,9 +70,15 @@ function Router() {
           </RequireAuthComponent>
         }/>
 
-        <Route path="/pages" element={
+        <Route path="/page" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <PagesPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/page/:pageName/document" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <PagesDocumentPage/>
           </RequireAuthComponent>
         }/>
 

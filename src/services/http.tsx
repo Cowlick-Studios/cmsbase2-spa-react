@@ -43,9 +43,9 @@ axiosInstance.interceptors.response.use((response) => {
 }, (error) => {
   switch(error.response.status) {
     case 401:
-      document.dispatchEvent(new CustomEvent('response_401', {
-        detail: { message: error.response.data.message },
-      }));
+      // document.dispatchEvent(new CustomEvent('response_401', {
+      //   detail: { message: error.response.data.message },
+      // }));
       break;
   }
   return error.response;

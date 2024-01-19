@@ -136,6 +136,14 @@ function App() {
     return null;
   });
 
+  const [pages, setPages]: any = useState(() => {
+    const localConfig = localStorage.getItem("pages");
+    if(localConfig){
+      return JSON.parse(localConfig);
+    }
+    return null;
+  });
+
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
@@ -153,12 +161,14 @@ function App() {
     localStorage.removeItem("uri");
     localStorage.removeItem("collections");
     localStorage.removeItem("collectionFieldTypes");
+    localStorage.removeItem("pages");
 
     setAccessToken(null);
     setUser(null);
     setTenant(null);
     setCollections(null);
     setCollectionFieldTypes(null);
+    setPages(null);
 
     navigate('/login');
   }
@@ -178,7 +188,9 @@ function App() {
           collections,
           setCollections,
           collectionFieldTypes,
-          setCollectionFieldTypes
+          setCollectionFieldTypes,
+          pages,
+          setPages
         }}
       >
         <div>

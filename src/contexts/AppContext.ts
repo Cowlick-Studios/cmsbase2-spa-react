@@ -13,4 +13,6 @@ export const AppContext = React.createContext({
   setCollections: (value: any) => {},
   collectionFieldTypes: null,
   setCollectionFieldTypes: (value: any) => {},
+  pages: null,
+  setPages: (value: any) => {},
 });

@@ -46,6 +46,7 @@ function LoginComponent( {}: any ) {
       AppContextState.setUrl(res.data.url);
       AppContextState.setCollections(res.data.config.collections);
       AppContextState.setCollectionFieldTypes(res.data.config.collection_field_types);
+      AppContextState.setPages(res.data.config.pages);
 
       localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -53,6 +54,7 @@ function LoginComponent( {}: any ) {
       localStorage.setItem("url", JSON.stringify(res.data.url));
       localStorage.setItem("collections", JSON.stringify(res.data.config.collections));
       localStorage.setItem("collectionFieldTypes", JSON.stringify(res.data.config.collection_field_types));
+      localStorage.setItem("pages", JSON.stringify(res.data.config.pages));
 
       setEmail("");
       setPassword("");
