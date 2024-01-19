@@ -27,33 +27,53 @@ import InputLabel from '@mui/material/InputLabel';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function PageCardFieldsComponent( {collection}: any ) {
+function PageCardFieldsComponent( {page}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
-  const [collectionFields, setCollectionFields] = useState<any>([]);
+  const [pageFields, setPageFields] = useState<any>([]);
   const [newFieldName, setNewFieldName] = useState("");
   const [newFieldTypeId, setNewFieldTypeId] = useState(1);
 
   useEffect(() => {
-    setCollectionFields(collection.fields);
+    const fieldsArr: any[] = []
+    for (let name in page.schema) {
+      fieldsArr.push({
+        name: name,
+        type_id: page.schema[name].type_id,
+        type: page.schema[name].type
+      })
+    }
+
+    console.log(fieldsArr);
+
+    setPageFields(fieldsArr);
     setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
-  }, [collection]);
+  }, []);
 
   const deleteField = (field: any) => {
-    http.delete(`/collection/${collection.id}/field/${field.id}`).then((res) => {
-      setCollectionFields(collectionFields.filter((fieldRecord: any) => {
-        return fieldRecord.id !== field.id;
+    http.delete(`/page/${page.id}/field/${field.name}`).then((res) => {
+      setPageFields(pageFields.filter((fieldRecord: any) => {
+        return fieldRecord.name !== field.name;
       }));
     });
   }
 
   const saveNewField = () => {
-    http.post(`/collection/${collection.id}/field`, {
+    http.post(`/page/${page.id}/field`, {
       name: newFieldName,
       type_id: newFieldTypeId
     }).then((res) => {
-      setCollectionFields([...collectionFields, res.data.field]);
+      const fieldsArr: any[] = []
+      for (let name in res.data.page.schema) {
+        fieldsArr.push({
+          name: name,
+          type_id: res.data.page.schema[name].type_id,
+          type: res.data.page.schema[name].type
+        })
+      }
+
+      setPageFields(fieldsArr);
 
       setNewFieldName("");
       setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
@@ -93,21 +113,19 @@ function PageCardFieldsComponent( {collection}: any ) {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Type</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {collectionFields.map((field: any) => (
+            {pageFields.map((field: any) => (
               <TableRow
-                key={field.id}
+                key={field.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">{field.id}</TableCell>
                 <TableCell>{field.name}</TableCell>
-                <TableCell>{field.type.name}</TableCell>
+                <TableCell>{field.type}</TableCell>
                 <TableCell align="right">
                   <IconButton aria-label="delete" size="small" onClick={() => {
                     deleteField(field);

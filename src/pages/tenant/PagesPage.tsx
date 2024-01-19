@@ -32,9 +32,8 @@ function PagesPage( {}: any ) {
         </Grid>
         <Grid container item xs={12} spacing={2}>
           {pages.map((page: any) => (
-            <Grid item xs={12} key={`CollectionList-${page.id}`}>
-              <p>{page.name}</p>
-              {/* <PageCardComponent collection={page} collections={pages} setCollections={setPages}/> */}
+            <Grid item xs={12} key={`PageList-${page.id}`}>
+              <PageCardComponent page={page} pages={pages} setPages={setPages}/>
             </Grid>
           ))}
         </Grid>
