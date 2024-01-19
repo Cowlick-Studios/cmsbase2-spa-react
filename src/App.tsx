@@ -15,6 +15,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import Alert, {AlertProps} from '@mui/material/Alert';
 
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
@@ -144,6 +146,9 @@ function App() {
     return null;
   });
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
@@ -152,6 +157,11 @@ function App() {
 
   document.addEventListener('response_401', (event: any) => {
     logout();
+  });
+
+  document.addEventListener('request_error', (event: any) => {
+    setSnackbarMessage(event.detail.message);
+    setSnackbarOpen(true);
   });
 
   const logout = () => {
@@ -252,6 +262,16 @@ function App() {
             </Main>
           </Box>
         </div>
+
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={2500}
+          onClose={() => setSnackbarOpen(false)}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        >
+          <Alert severity="error">{snackbarMessage}</Alert>
+        </Snackbar>
+
       </AppContext.Provider>
     </>
   );
