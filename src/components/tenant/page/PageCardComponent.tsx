@@ -18,6 +18,8 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -41,23 +43,58 @@ function PageCardComponent( {page, pages, setPages}: any ) {
     });
   } 
 
+  const publishPageToggle = (page: any) => {
+    http.patch(`/page/${page.id}`, {
+      published: !page.published
+    }).then((res) => {
+      setPages(pages.map((pageRecord: any) => {
+        if(pageRecord.id === res.data.page.id){
+          return res.data.page;
+        }
+        return pageRecord;
+      }));
+    });
+  }
+
   return (
     <>
       <Card variant="outlined">
 
         <CardContent>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid container item xs={6} gap={2}>
+
               <Typography variant="h5" gutterBottom>
                 {page.name}
               </Typography>
+
+              <Typography variant="h5" gutterBottom>
+                {page.published ? (
+                  <VisibilityIcon color='primary'/>
+                ) : (
+                  <VisibilityOffIcon color='warning'/>
+                )}
+              </Typography>
+
             </Grid>
             <Grid container item xs={6} justifyContent="flex-end">
+
+              <IconButton aria-label="delete" onClick={() => {
+                publishPageToggle(page);
+              }}>
+                {page.published ? (
+                  <VisibilityIcon fontSize="inherit"/>
+                ) : (
+                  <VisibilityOffIcon fontSize="inherit"/>
+                )}
+              </IconButton>
+
               <IconButton aria-label="delete" onClick={() => {
                 deletePage(page);
               }}>
                 <DeleteIcon />
               </IconButton>
+
             </Grid>
           </Grid>
         </CardContent>

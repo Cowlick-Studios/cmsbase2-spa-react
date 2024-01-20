@@ -125,7 +125,11 @@ function ItemPage( {}: any ) {
                       <IconButton aria-label="delete" size="small" onClick={() => {
                         togglePublish(item);
                       }}>
-                        <VisibilityIcon fontSize="inherit" />
+                        {item.published ? (
+                          <VisibilityIcon fontSize="inherit"/>
+                        ) : (
+                          <VisibilityOffIcon fontSize="inherit"/>
+                        )}
                       </IconButton>
                       <IconButton aria-label="delete" size="small" onClick={() => {
                         deleteItem(item);
