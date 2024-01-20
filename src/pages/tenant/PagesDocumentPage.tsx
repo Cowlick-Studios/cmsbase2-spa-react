@@ -29,29 +29,19 @@ function PagesDocumentPage( {}: any ) {
 
   useEffect(() => {
     http.get(`/page/${pageName}`).then((res) => {
-      console.log(res.data.page);
-      const fieldsArr: any[] = []
-      for (let name in res.data.page.schema) {
-        fieldsArr.push({
-          name: name,
-          type_id: res.data.page.schema[name].type_id,
-          type: res.data.page.schema[name].type
-        })
-      }
-
       setPage(res.data.page);
-      setPageFields(fieldsArr);
+      setPageFields(res.data.page.fields);
   
       const newDocumentRequestObjectTEMP: any = {};
-      for(const name in res.data.page.data){
-        if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(res.data.page.schema[name].type)){
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
-        } else if(['char', 'string', 'tinyText', 'text', 'mediumText', 'longText'].includes(res.data.page.schema[name].type)){
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
-        } else if(res.data.page.schema[name].type === 'boolean'){
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
+      for(const field of res.data.page.fields){
+        if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type.name)){
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
+        } else if(['char', 'string', 'tinyText', 'text', 'mediumText', 'longText'].includes(field.type.name)){
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
+        } else if(field.type.name.type === 'boolean'){
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
         } else {
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
         }
       }
       setNewDocumentRequestObject(newDocumentRequestObjectTEMP);
@@ -64,27 +54,24 @@ function PagesDocumentPage( {}: any ) {
   }
 
   const saveNewDocument = () => {
-    console.log(newDocumentRequestObject);
-
     http.patch(`/page/${page.id}`, {
       data: newDocumentRequestObject
     }).then((res) => {
-      console.log(res);
-
-      const newDocumentRequestObjectTEMP: any = {};
+      setPage(res.data.page);
+      setPageFields(res.data.page.fields);
   
-      for(const name in res.data.page.data){
-        if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(res.data.page.schema[name].type)){
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
-        } else if(['char', 'string', 'tinyText', 'text', 'mediumText', 'longText'].includes(res.data.page.schema[name].type)){
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
-        } else if(res.data.page.schema[name].type === 'boolean'){
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
+      const newDocumentRequestObjectTEMP: any = {};
+      for(const field of res.data.page.fields){
+        if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type.name)){
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
+        } else if(['char', 'string', 'tinyText', 'text', 'mediumText', 'longText'].includes(field.type.name)){
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
+        } else if(field.type.name.type === 'boolean'){
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
         } else {
-          newDocumentRequestObjectTEMP[name] = res.data.page.data[name];
+          newDocumentRequestObjectTEMP[field.name] = res.data.page.data[field.name];
         }
       }
-  
       setNewDocumentRequestObject(newDocumentRequestObjectTEMP);
     });
   }
@@ -99,7 +86,7 @@ function PagesDocumentPage( {}: any ) {
             </Grid>
 
             {pageFields.map((field: any) => { // 1/4 = 3, 1/3 = 4, 1/2 = 6, 1 = 12
-              if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type)){
+              if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.name}`}>
                     <TextField fullWidth id="outlined" label={field.name} variant="outlined" type="number" defaultValue={newDocumentRequestObject[field.name]} onChange={(e) => {
@@ -107,7 +94,7 @@ function PagesDocumentPage( {}: any ) {
                     }} />
                   </Grid>
                 );
-              } else if(['char', 'string', 'tinyText'].includes(field.type)){
+              } else if(['char', 'string', 'tinyText'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.name}`}>
                     <TextField fullWidth id="outlined" label={field.name} variant="outlined" type="text" defaultValue={newDocumentRequestObject[field.name]} onChange={(e) => {
@@ -115,7 +102,7 @@ function PagesDocumentPage( {}: any ) {
                     }} />
                   </Grid>
                 );
-              } else if(['text', 'mediumText', 'longText'].includes(field.type)){
+              } else if(['text', 'mediumText', 'longText'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                     <TextField multiline rows={6} fullWidth id="outlined" label={field.name} variant="outlined" type="text" defaultValue={newDocumentRequestObject[field.name]} onChange={(e) => {
@@ -123,7 +110,7 @@ function PagesDocumentPage( {}: any ) {
                     }} />
                   </Grid>
                 );
-              } else if(['richText'].includes(field.type)){
+              } else if(['richText'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.name}`}>
                     <TextField multiline rows={6} fullWidth id="outlined" label={field.name} variant="outlined" type="text" defaultValue={newDocumentRequestObject[field.name]} onChange={(e) => {
@@ -131,7 +118,7 @@ function PagesDocumentPage( {}: any ) {
                     }} />
                   </Grid>
                 );
-              } else if(['boolean'].includes(field.type)){
+              } else if(['boolean'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.name}`}>
                     <FormControlLabel control={<Switch defaultChecked={newDocumentRequestObject[field.name]} defaultValue={newDocumentRequestObject[field.name]} onChange={(e) => {
@@ -139,7 +126,7 @@ function PagesDocumentPage( {}: any ) {
                     }} />} label={field.name} />
                   </Grid>
                 );
-              } else if(['date'].includes(field.type)){
+              } else if(['date'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.name}`}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -151,7 +138,7 @@ function PagesDocumentPage( {}: any ) {
                     </LocalizationProvider>
                   </Grid>
                 );
-              } else if(['time'].includes(field.type)){
+              } else if(['time'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.name}`}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -163,7 +150,7 @@ function PagesDocumentPage( {}: any ) {
                     </LocalizationProvider>
                   </Grid>
                 );
-              } else if(['dateTime', 'timestamp'].includes(field.type)){
+              } else if(['dateTime', 'timestamp'].includes(field.type.name)){
                 return (
                   <Grid item xs={12} key={`CollectionDocumentInputField-${field.name}`}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>

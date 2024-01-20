@@ -36,9 +36,8 @@ function PageCardFieldsComponent( {page}: any ) {
   const [newFieldTypeId, setNewFieldTypeId] = useState(1);
 
   useEffect(() => {
-    console.log(page);
     setPageFields(page.fields);
-    setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
+    setNewFieldTypeId(AppContextState.collectionFieldTypes[18-1].id);
   }, [page]);
 
   const deleteField = (field: any) => {
@@ -57,7 +56,7 @@ function PageCardFieldsComponent( {page}: any ) {
       setPageFields([...pageFields, res.data.field]);
 
       setNewFieldName("");
-      setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
+      setNewFieldTypeId(AppContextState.collectionFieldTypes[18-1].id);
     });
   }
 
@@ -108,7 +107,7 @@ function PageCardFieldsComponent( {page}: any ) {
               >
                 <TableCell component="th" scope="row">{field.id}</TableCell>
                 <TableCell>{field.name}</TableCell>
-                <TableCell>{field.type.datatype}</TableCell>
+                <TableCell>{field.type.name}</TableCell>
                 <TableCell align="right">
                   <IconButton aria-label="delete" size="small" onClick={() => {
                     deleteField(field);
