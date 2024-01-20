@@ -19,7 +19,7 @@ import { UserPage as TenantUserPage } from './pages/tenant/UserPage';
 import { RequestPage } from './pages/tenant/RequestPage';
 import { SettingsPage } from './pages/tenant/SettingsPage';
 import { PagesPage } from './pages/tenant/PagesPage';
-import { ItemsPage } from './pages/tenant/ItemsPage';
+import { ItemPage } from './pages/tenant/ItemPage';
 import { ClientAnalyticsPage } from './pages/tenant/ClientAnalytics';
 import { PagesDocumentPage } from './pages/tenant/PagesDocumentPage';
 
@@ -64,9 +64,9 @@ function Router() {
           </RequireAuthComponent>
         }/>
 
-        <Route path="/items" element={
+        <Route path="/item" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
-            <ItemsPage/>
+            <ItemPage/>
           </RequireAuthComponent>
         }/>
 

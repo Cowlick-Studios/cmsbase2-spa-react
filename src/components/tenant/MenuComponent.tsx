@@ -73,13 +73,13 @@ function MenuComponent( {children, enforce = true}: any ) {
           </ListItem>
 
           <ListItem disablePadding onClick={() => {
-            navigate('/items');
+            navigate('/item');
           }}>
-            <ListItemButton selected={isCurrentRoute('/items')}>
+            <ListItemButton selected={isCurrentRoute('/item')}>
               <ListItemIcon>
                 <LooksOneIcon />
               </ListItemIcon>
-              <ListItemText primary="Items" />
+              <ListItemText primary="Item" />
             </ListItemButton>
           </ListItem>
 
