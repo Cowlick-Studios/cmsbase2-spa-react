@@ -31,6 +31,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EditIcon from '@mui/icons-material/Edit';
 
 import NewItemModalComponent from '../../components/tenant/item/NewItemModalComponent';
+import { UpdateItemComponent } from '../../components/tenant/item/UpdateItemComponent';
 
 function ItemPage( {}: any ) {
   const navigate = useNavigate();
@@ -38,6 +39,8 @@ function ItemPage( {}: any ) {
 
   const [items, setItems] = useState<any>([]);
   const [openNewItemModal, setOpenNewItemModal] = useState(false);
+  const [selectedUpdateItem, setSelectedUpdateItem] = useState<any>({});
+  const [openUpdateItemModal, setUpdateNewItemModal] = useState(false);
 
   useEffect(() => {
     http.get(`/item`).then((res) => {
@@ -53,6 +56,11 @@ function ItemPage( {}: any ) {
     });
   }
 
+  const editItem = (item: any) => {
+    setSelectedUpdateItem(item);
+    setUpdateNewItemModal(true);
+  }
+
   return (
     <>
       <Grid container spacing={2}>
@@ -63,7 +71,7 @@ function ItemPage( {}: any ) {
           }}>New Item</Button>
         </Grid>
 
-        <Grid item xs={12} spacing={2}>
+        <Grid item xs={12}>
           <Card>
             <Table sx={{
               width: '100%'
@@ -89,7 +97,7 @@ function ItemPage( {}: any ) {
                     <TableCell>{item.value}</TableCell>
                     <TableCell align="right">
                       <IconButton aria-label="delete" size="small" onClick={() => {
-                        deleteItem(item);
+                        editItem(item);
                       }}>
                         <EditIcon fontSize="inherit" />
                       </IconButton>
@@ -114,6 +122,7 @@ function ItemPage( {}: any ) {
       </Grid>
 
       <NewItemModalComponent items={items} setItems={setItems} open={openNewItemModal} setOpen={setOpenNewItemModal}/>
+      <UpdateItemComponent open={openUpdateItemModal} setOpen={setUpdateNewItemModal} items={items} setItems={setItems} item={selectedUpdateItem}/>
     </>
   );
 }

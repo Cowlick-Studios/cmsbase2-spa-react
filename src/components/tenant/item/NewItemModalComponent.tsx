@@ -29,7 +29,7 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
 
   const [newItemTypeId, setNewItemTypeId] = useState(1);
   const [newItemName, setNewItemName] = useState("");
-  const [newItemValue, setNewItemValue] = useState("");
+  // const [newItemValue, setNewItemValue] = useState("");
 
   useEffect(() => {
     setNewItemTypeId(AppContextState.collectionFieldTypes[16-1].id);
@@ -40,6 +40,8 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
   }
 
   const handleClose = () => {
+    setNewItemName("");
+    // setNewItemValue("");
     setNewItemTypeId(AppContextState.collectionFieldTypes[16-1].id);
     setOpen(false);
   }
@@ -51,10 +53,10 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
   const createNewItem = () => {
     http.post(`/item`, {
       name: newItemName,
-      value: newItemValue,
       type_id: newItemTypeId,
     }).then((res) => {
-      setItems([...items, res.data.item]);
+      console.log(res);
+      setItems([res.data.item, ...items]);
       handleClose();
     });
   }
@@ -93,11 +95,11 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
                 </Select>
               </Grid>
 
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField fullWidth label="Item Value" variant="outlined" type="text" value={newItemValue} onChange={(e) => {
                   setNewItemValue(e.target.value);
                 }} />
-              </Grid>
+              </Grid> */}
 
               <Grid container item xs={12} gap={1}>
                 <Button variant="contained" onClick={createNewItem}>Create</Button>
