@@ -61,6 +61,19 @@ function ItemPage( {}: any ) {
     setUpdateNewItemModal(true);
   }
 
+  const togglePublish = (item: any) => {
+    http.patch(`/item/${item.id}`, {
+      published: !item.published
+    }).then((res) => {
+      setItems(items.map((itemRecord: any) => {
+        if(itemRecord.id === res.data.item.id){
+          return res.data.item;
+        }
+        return itemRecord;
+      }));
+    });
+  }
+
   return (
     <>
       <Grid container spacing={2}>
@@ -79,6 +92,7 @@ function ItemPage( {}: any ) {
               <TableHead>
                 <TableRow>
                   <TableCell>ID</TableCell>
+                  <TableCell>Published</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Type</TableCell>
                   <TableCell>Value</TableCell>
@@ -92,6 +106,13 @@ function ItemPage( {}: any ) {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">{item.id}</TableCell>
+                    <TableCell>
+                      {item.published ? (
+                        <VisibilityIcon color='primary'/>
+                      ) : (
+                        <VisibilityOffIcon color='warning'/>
+                      )}
+                    </TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.type.name}</TableCell>
                     <TableCell>{item.value}</TableCell>
@@ -102,7 +123,7 @@ function ItemPage( {}: any ) {
                         <EditIcon fontSize="inherit" />
                       </IconButton>
                       <IconButton aria-label="delete" size="small" onClick={() => {
-                        deleteItem(item);
+                        togglePublish(item);
                       }}>
                         <VisibilityIcon fontSize="inherit" />
                       </IconButton>
