@@ -36,25 +36,15 @@ function PageCardFieldsComponent( {page}: any ) {
   const [newFieldTypeId, setNewFieldTypeId] = useState(1);
 
   useEffect(() => {
-    const fieldsArr: any[] = []
-    for (let name in page.schema) {
-      fieldsArr.push({
-        name: name,
-        type_id: page.schema[name].type_id,
-        type: page.schema[name].type
-      })
-    }
-
-    console.log(fieldsArr);
-
-    setPageFields(fieldsArr);
+    console.log(page);
+    setPageFields(page.fields);
     setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
-  }, []);
+  }, [page]);
 
   const deleteField = (field: any) => {
-    http.delete(`/page/${page.id}/field/${field.name}`).then((res) => {
+    http.delete(`/page/${page.id}/field/${field.id}`).then((res) => {
       setPageFields(pageFields.filter((fieldRecord: any) => {
-        return fieldRecord.name !== field.name;
+        return fieldRecord.id !== field.id;
       }));
     });
   }
@@ -64,16 +54,7 @@ function PageCardFieldsComponent( {page}: any ) {
       name: newFieldName,
       type_id: newFieldTypeId
     }).then((res) => {
-      const fieldsArr: any[] = []
-      for (let name in res.data.page.schema) {
-        fieldsArr.push({
-          name: name,
-          type_id: res.data.page.schema[name].type_id,
-          type: res.data.page.schema[name].type
-        })
-      }
-
-      setPageFields(fieldsArr);
+      setPageFields([...pageFields, res.data.field]);
 
       setNewFieldName("");
       setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
@@ -113,6 +94,7 @@ function PageCardFieldsComponent( {page}: any ) {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Type</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -121,11 +103,12 @@ function PageCardFieldsComponent( {page}: any ) {
           <TableBody>
             {pageFields.map((field: any) => (
               <TableRow
-                key={field.name}
+                key={field.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
+                <TableCell component="th" scope="row">{field.id}</TableCell>
                 <TableCell>{field.name}</TableCell>
-                <TableCell>{field.type}</TableCell>
+                <TableCell>{field.type.datatype}</TableCell>
                 <TableCell align="right">
                   <IconButton aria-label="delete" size="small" onClick={() => {
                     deleteField(field);
