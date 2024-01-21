@@ -37,7 +37,7 @@ function PageCardFieldsComponent( {page}: any ) {
 
   useEffect(() => {
     setPageFields(page.fields);
-    setNewFieldTypeId(AppContextState.collectionFieldTypes[18-1].id);
+    setNewFieldTypeId(AppContextState.fieldTypes[18-1].id);
   }, [page]);
 
   const deleteField = (field: any) => {
@@ -56,7 +56,7 @@ function PageCardFieldsComponent( {page}: any ) {
       setPageFields([...pageFields, res.data.field]);
 
       setNewFieldName("");
-      setNewFieldTypeId(AppContextState.collectionFieldTypes[18-1].id);
+      setNewFieldTypeId(AppContextState.fieldTypes[18-1].id);
     });
   }
 
@@ -81,7 +81,7 @@ function PageCardFieldsComponent( {page}: any ) {
                 setNewFieldTypeId(Number(e.target.value));
               }}
             >
-              {AppContextState.collectionFieldTypes.map((fieldType: any) => (
+              {AppContextState.fieldTypes.map((fieldType: any) => (
                 <MenuItem key={`CollectionFieldsNewFieldList-${fieldType.id}`} value={fieldType.id}>{fieldType.name}</MenuItem>
               ))}
             </Select>

@@ -37,7 +37,7 @@ function EmailCardFieldsComponent( {emailSubmission}: any ) {
 
   useEffect(() => {
     setFields(emailSubmission.fields);
-    setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
+    setNewFieldTypeId(AppContextState.fieldTypes[0].id);
   }, [emailSubmission]);
 
   const deleteField = (field: any) => {
@@ -56,7 +56,7 @@ function EmailCardFieldsComponent( {emailSubmission}: any ) {
       setFields([...fields, res.data.field]);
 
       setNewFieldName("");
-      setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
+      setNewFieldTypeId(AppContextState.fieldTypes[0].id);
     });
   }
 
@@ -81,7 +81,7 @@ function EmailCardFieldsComponent( {emailSubmission}: any ) {
                 setNewFieldTypeId(Number(e.target.value));
               }}
             >
-              {AppContextState.collectionFieldTypes.map((fieldType: any) => (
+              {AppContextState.fieldTypes.map((fieldType: any) => (
                 <MenuItem key={`CollectionFieldsNewFieldList-${fieldType.id}`} value={fieldType.id}>{fieldType.name}</MenuItem>
               ))}
             </Select>

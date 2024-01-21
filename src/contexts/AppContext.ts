@@ -11,8 +11,8 @@ export const AppContext = React.createContext({
   setUrl: (value: any) => {},
   collections: null,
   setCollections: (value: any) => {},
-  collectionFieldTypes: null,
-  setCollectionFieldTypes: (value: any) => {},
+  fieldTypes: null,
+  setFieldTypes: (value: any) => {},
   pages: null,
   setPages: (value: any) => {},
 });

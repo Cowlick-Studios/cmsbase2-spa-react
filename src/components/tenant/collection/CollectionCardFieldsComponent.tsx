@@ -37,7 +37,7 @@ function CollectionCardFieldsComponent( {collection}: any ) {
 
   useEffect(() => {
     setCollectionFields(collection.fields);
-    setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
+    setNewFieldTypeId(AppContextState.fieldTypes[16-1].id);
   }, [collection]);
 
   const deleteField = (field: any) => {
@@ -56,7 +56,7 @@ function CollectionCardFieldsComponent( {collection}: any ) {
       setCollectionFields([...collectionFields, res.data.field]);
 
       setNewFieldName("");
-      setNewFieldTypeId(AppContextState.collectionFieldTypes[0].id);
+      setNewFieldTypeId(AppContextState.fieldTypes[16-1].id);
     });
   }
 
@@ -81,7 +81,7 @@ function CollectionCardFieldsComponent( {collection}: any ) {
                 setNewFieldTypeId(Number(e.target.value));
               }}
             >
-              {AppContextState.collectionFieldTypes.map((fieldType: any) => (
+              {AppContextState.fieldTypes.map((fieldType: any) => (
                 <MenuItem key={`CollectionFieldsNewFieldList-${fieldType.id}`} value={fieldType.id}>{fieldType.name}</MenuItem>
               ))}
             </Select>

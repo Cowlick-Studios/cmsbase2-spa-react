@@ -45,7 +45,7 @@ function LoginComponent( {}: any ) {
       AppContextState.setTenant(res.data.tenant);
       AppContextState.setUrl(res.data.url);
       AppContextState.setCollections(res.data.config.collections);
-      AppContextState.setCollectionFieldTypes(res.data.config.collection_field_types);
+      AppContextState.setFieldTypes(res.data.config.field_types);
       AppContextState.setPages(res.data.config.pages);
 
       localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
@@ -53,7 +53,7 @@ function LoginComponent( {}: any ) {
       localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
       localStorage.setItem("url", JSON.stringify(res.data.url));
       localStorage.setItem("collections", JSON.stringify(res.data.config.collections));
-      localStorage.setItem("collectionFieldTypes", JSON.stringify(res.data.config.collection_field_types));
+      localStorage.setItem("fieldTypes", JSON.stringify(res.data.config.field_types));
       localStorage.setItem("pages", JSON.stringify(res.data.config.pages));
 
       setEmail("");

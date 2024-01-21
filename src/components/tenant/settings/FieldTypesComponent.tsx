@@ -19,15 +19,15 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-function CollectionFieldTypesComponent( {}: any ) {
+function FieldTypesComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
-  const [collectionFieldTypes, setCollectionFieldTypes] = useState<any>([]);
+  const [fieldTypes, setFieldTypes] = useState<any>([]);
 
   useEffect(() => {
     http.get(`/collection_field_type`).then((res) => {
-      setCollectionFieldTypes(res.data.types);
+      setFieldTypes(res.data.types);
     });
   }, []);
 
@@ -66,9 +66,9 @@ function CollectionFieldTypesComponent( {}: any ) {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {collectionFieldTypes.map((collectionFieldType: any) => (
+                      {fieldTypes.map((collectionFieldType: any) => (
                         <TableRow
-                          key={`CollectionFieldTypeSettingsList-${collectionFieldType.id}`}
+                          key={`FieldTypeSettingsList-${collectionFieldType.id}`}
                           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                           <TableCell>{collectionFieldType.id}</TableCell>
@@ -88,4 +88,4 @@ function CollectionFieldTypesComponent( {}: any ) {
   );
 }
 
-export {CollectionFieldTypesComponent};
+export {FieldTypesComponent};

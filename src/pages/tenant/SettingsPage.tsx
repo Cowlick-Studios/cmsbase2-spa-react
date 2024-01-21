@@ -7,7 +7,7 @@ import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 
-import { CollectionFieldTypesComponent } from '../../components/tenant/settings/CollectionFieldTypesComponent';
+import { FieldTypesComponent } from '../../components/tenant/settings/FieldTypesComponent';
 import { RequestLoggingComponent } from '../../components/tenant/settings/RequestLoggingComponent';
 import { ClientRequestLoggingComponent } from '../../components/tenant/settings/ClientRequestLoggingComponent';
 
@@ -27,7 +27,7 @@ function SettingsPage() {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <CollectionFieldTypesComponent/>
+          <FieldTypesComponent/>
         </Grid>
         <Grid item xs={12}>
           <RequestLoggingComponent settings={settings}/>

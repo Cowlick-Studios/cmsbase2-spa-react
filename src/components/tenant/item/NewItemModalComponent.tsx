@@ -32,7 +32,7 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
   // const [newItemValue, setNewItemValue] = useState("");
 
   useEffect(() => {
-    setNewItemTypeId(AppContextState.collectionFieldTypes[16-1].id);
+    setNewItemTypeId(AppContextState.fieldTypes[16-1].id);
   }, []);
 
   const handleOpen = () => {
@@ -42,7 +42,7 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
   const handleClose = () => {
     setNewItemName("");
     // setNewItemValue("");
-    setNewItemTypeId(AppContextState.collectionFieldTypes[16-1].id);
+    setNewItemTypeId(AppContextState.fieldTypes[16-1].id);
     setOpen(false);
   }
 
@@ -89,7 +89,7 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
                     setNewItemTypeId(Number(e.target.value));
                   }}
                 >
-                  {AppContextState.collectionFieldTypes.map((fieldType: any) => (
+                  {AppContextState.fieldTypes.map((fieldType: any) => (
                     <MenuItem key={`ItemFieldType-${fieldType.id}`} value={fieldType.id}>{fieldType.name}</MenuItem>
                   ))}
                 </Select>
