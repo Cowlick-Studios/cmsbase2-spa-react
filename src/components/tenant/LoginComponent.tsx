@@ -32,9 +32,9 @@ function LoginComponent( {}: any ) {
     let url = "";
     const tld = process.env.REACT_APP_TLD;
     if(tld === "localhost"){
-      url = `http://${tenant}.${tld}`;
+      url = `http://${tld}/tenant/${tenant}`;
     } else {
-      url = `https://${tenant}.${tld}`;
+      url = `https://${tld}/tenant/${tenant}`;
     }
     axios.post(`${url}/auth/login`, {
       email: email,

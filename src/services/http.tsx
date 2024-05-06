@@ -12,9 +12,9 @@ const getBaseUrl = () => {
 
   if(tenant){
     if(tld === "localhost"){
-      return `http://${tenant}.${tld}`;
+      return `http://${tld}/tenant/${tenant}`;
     }
-    return `https://${tenant}.${tld}`;
+    return `https://${tld}/tenant/${tenant}`;
   }
 
   if(tld === "localhost"){
