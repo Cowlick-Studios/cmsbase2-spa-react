@@ -4,9 +4,9 @@ const generateUrl = (route: string = '', tenant = null) => {
 
   if(tenant){
     if(tld === "localhost"){
-      return `http://${tenant}.${tld}${route}`;
+      return `http://${tld}/tenant/${tenant}${route}`;
     }
-    return `https://${tenant}.${tld}${route}`;
+    return `https://${tld}/tenant/${tenant}${route}`;
   }
 
   if(tld === "localhost"){
