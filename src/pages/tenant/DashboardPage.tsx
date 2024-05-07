@@ -20,7 +20,6 @@ function DashboardPage() {
 
   useEffect(() => {
     http.get(`/dashboard`).then((res) => {
-      console.log(res.data);
       setDashboardData(res.data);
     });
   }, []);

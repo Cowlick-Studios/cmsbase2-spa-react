@@ -21,9 +21,9 @@ function FileStorageLimitComponent({dashboardData}: any) {
   const [usedStorageDecimal, setUsedStorageDecimal] = useState(0);
 
   useEffect(() => {
-    setStorageLimit(dashboardData.storage_limit_file);
-    setUsedStorage(bytesToGb(dashboardData.file_usage));
-    setUsedStorageDecimal(bytesToGb(dashboardData.file_usage) / dashboardData.storage_limit_file);
+    setStorageLimit(dashboardData.tenant.storage_limit_file * 1024);
+    setUsedStorage(dashboardData.file_usage);
+    setUsedStorageDecimal(dashboardData.file_usage / (dashboardData.tenant.storage_limit_file * 1024));
   }, [dashboardData])
 
   return (
@@ -44,7 +44,7 @@ function FileStorageLimitComponent({dashboardData}: any) {
 
             <Grid item xs={6}>
               <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
-                {numeral(usedStorage).format('0,0.00')} GB / {numeral(storageLimit).format('0,0.00')} GB
+                {numeral(usedStorage / 1024).format('0,0.00')} GB / {numeral(storageLimit / 1024).format('0,0.00')} GB
               </Typography>
             </Grid>
 
