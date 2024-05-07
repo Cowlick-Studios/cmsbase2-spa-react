@@ -20,6 +20,9 @@ import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -36,10 +39,25 @@ function MediaPage( {}: any ) {
   const [openImageUpdate, setOpenImageUpdate] = useState(false);
   const [selectedUpdateImage, setSelectedUpdateImage] = useState<any>({});
   const [tileView, setTileView] = useState(false);
+  const [collections, setCollections] = useState<any[]>([]);
+  const [selectedCollection, setSelectedCollection] = useState<any>(undefined);
+  const [newCollectionName, setNewCollectionName] = useState<string>("");
 
   useEffect(() => {
     http.get(`/file`).then((res: any) => {
+      console.log(res.data.files);
       setImages(res.data.files);
+    });
+
+    http.get(`/file_collection`).then((res: any) => {
+      setCollections([{
+        id: 0,
+        name: "ALL"
+      }, ...res.data.collections]);
+      setSelectedCollection({
+        id: 0,
+        name: "ALL"
+      });
     });
   }, []);
 
@@ -56,17 +74,76 @@ function MediaPage( {}: any ) {
     });
   }
 
+  const selectCollection = (event: any) => {
+
+    if(event.target.value.id == 0){
+      setSelectedCollection(null);
+    } else {
+      setSelectedCollection(event.target.value);
+    }
+
+    http.get(`/file`, {
+      params: {
+        collection_id: event.target.value.id
+      }
+    }).then((res: any) => {
+      console.log(res);
+      setImages(res.data.files);
+    });
+
+  }
+
+  const createNewCollection = () => {
+    http.post(`/file_collection`, {
+      name: newCollectionName
+    }).then((res: any) => {
+      setNewCollectionName("");
+      setCollections([...collections, res.data.collection,]);
+    });
+  }
+
   return (
     <>
       <Grid container gap={2}>
         <Grid item xs={12}>
           <UploadImageComponent images={images} setImages={setImages}/>
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel control={<Switch checked={tileView} onChange={(e) => {
-            setTileView(e.target.checked);
-          }} />} label="Tile View" />
+
+        <Grid container item xs={12}>
+          <Grid item xs={6}>
+            <FormControlLabel control={<Switch checked={tileView} onChange={(e) => {
+              setTileView(e.target.checked);
+            }} />} label="Tile View" />
+          </Grid>
+          <Grid item xs={6} container>
+            <Grid item xs={10}>
+              <TextField fullWidth label="New Collection" variant="outlined" value={newCollectionName} onChange={(e) => {
+                    setNewCollectionName(e.target.value);
+                  }} />
+            </Grid>
+            <Grid item xs={2}>
+              <Button variant="contained" onClick={createNewCollection}>Create</Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Select
+                fullWidth
+                value={selectedCollection}
+                label="Collection"
+                onChange={selectCollection}
+              >
+                {collections.map((collection) => (
+                  <MenuItem
+                    key={collection.id}
+                    value={collection}
+                  >
+                    {collection.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          </Grid>
         </Grid>
+
         <Grid item xs={12}>
           {tileView ? (
             <ImageList variant="masonry" cols={4} gap={8}>
@@ -142,7 +219,7 @@ function MediaPage( {}: any ) {
         </Grid>
       </Grid>
       
-      <ImageUpdateModalComponent open={openImageUpdate} setOpen={setOpenImageUpdate} images={images} setImages={setImages} image={selectedUpdateImage}/>
+      <ImageUpdateModalComponent open={openImageUpdate} setOpen={setOpenImageUpdate} collections={collections} images={images} setImages={setImages} image={selectedUpdateImage}/>
     </>
   );
 }

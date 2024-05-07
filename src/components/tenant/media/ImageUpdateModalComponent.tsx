@@ -22,12 +22,14 @@ import Typography from '@mui/material/Typography';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import CloseIcon from '@mui/icons-material/Close';
 
 import Modal from '../../utility/Modal';
 
-function ImageUpdateModalComponent( {open, setOpen, images, setImages, image}: any ) {
+function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, collections}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
@@ -81,6 +83,29 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image}: a
     });
   }
 
+  const names = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder',
+  ];
+
+  const [fileCollections, setFileCollections] = useState<String[]>([]);
+  const [fileCollectionsString, setFileCollectionsString] = useState<String>("");
+
+  const multiSelectCollection = (event: any) => {
+    console.log(event.target.value);
+    setFileCollections(event.target.value);
+
+    console.log();
+  };
+
   return (
     <>
       <Modal open={open} onClose={handleClose}>
@@ -99,7 +124,7 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image}: a
                   <p>{image.file}</p>
                   <p>{image.mime_type}</p>
                   <p>{image.width}px / {image.height}px</p>
-                  <p>{image.size} bytes</p>
+                  <p>{ Math.ceil(image.size / 1024) > 1024 ? Math.ceil(image.size / (1024 * 1024)) : Math.ceil(image.size / (1024)) } KB</p>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField fullWidth label="File Name" variant="outlined" type="text" value={name} onChange={(e) => {
@@ -116,6 +141,25 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image}: a
                     setCaption(e.target.value);
                   }} />
                 </Grid>
+
+                {/* Multi select group */}
+                <Grid item xs={12}>
+                  <Select
+                    multiple
+                    value={fileCollections}
+                    onChange={multiSelectCollection}
+                  >
+                    {names.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+
                 <Grid container item xs={12} gap={1}>
                   <Button variant="contained" onClick={saveImage}>Save</Button>
                   <Button color="error" variant="contained" onClick={handleClose}>Close</Button>
