@@ -41,6 +41,7 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
     setName(image.name || "");
     setAltText(image.alternative_text || "");
     setCaption(image.caption || "");
+    setFileCollections(image.collections || []);
   }, [image]);
 
   const handleOpen = () => {
@@ -83,27 +84,21 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
     });
   }
 
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-  ];
-
   const [fileCollections, setFileCollections] = useState<String[]>([]);
-  const [fileCollectionsString, setFileCollectionsString] = useState<String>("");
 
   const multiSelectCollection = (event: any) => {
     console.log(event.target.value);
     setFileCollections(event.target.value);
 
-    console.log();
+    const collectionIds: any[] = event.target.value.map((collection: any) => {
+      return collection.id
+    });
+
+    http.patch(`/file/${image.id}/collection`, {
+      collection_ids: collectionIds
+    }).then((res: any) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -149,12 +144,12 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
                     value={fileCollections}
                     onChange={multiSelectCollection}
                   >
-                    {names.map((name) => (
+                    {collections.map((collection: any) => (
                       <MenuItem
-                        key={name}
-                        value={name}
+                        key={collection.id}
+                        value={collection}
                       >
-                        {name}
+                        {collection.name}
                       </MenuItem>
                     ))}
                   </Select>
