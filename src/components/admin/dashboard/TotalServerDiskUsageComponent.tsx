@@ -21,9 +21,9 @@ function TotalServerDiskUsageComponent({dashboardData}: any) {
   const [diskUsagePercentage, setDiskUsagePercentage] = useState(0);
 
   useEffect(() => {
-    setUsedDiskSpace(bytesToGb(dashboardData.total_disk_space) - bytesToGb(dashboardData.free_disk_space));
-    setTotalDiskSpace(bytesToGb(dashboardData.total_disk_space));
-    setDiskUsagePercentage(((bytesToGb(dashboardData.total_disk_space) - bytesToGb(dashboardData.free_disk_space)) / bytesToGb(dashboardData.total_disk_space)));
+    setUsedDiskSpace(dashboardData.total_disk_space - dashboardData.free_disk_space);
+    setTotalDiskSpace(dashboardData.total_disk_space);
+    setDiskUsagePercentage((dashboardData.total_disk_space - dashboardData.free_disk_space) / dashboardData.total_disk_space);
   }, [dashboardData])
 
   return (
@@ -44,7 +44,7 @@ function TotalServerDiskUsageComponent({dashboardData}: any) {
 
             <Grid item xs={6}>
               <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
-                {numeral(usedDiskSpace).format('0,0.00')} GB / {numeral(totalDiskSpace).format('0,0.00')} GB
+                {numeral(usedDiskSpace / 1024).format('0,0.00')} GB / {numeral(totalDiskSpace / 1024).format('0,0.00')} GB
               </Typography>
             </Grid>
 
