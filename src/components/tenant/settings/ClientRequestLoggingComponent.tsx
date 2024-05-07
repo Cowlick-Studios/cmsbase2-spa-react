@@ -51,9 +51,9 @@ function ClientRequestLoggingComponent( {settings}: any ) {
   }
 
   const clearLogs = () => {
-    // http.delete(`/request`).then((res) => {
-    //   // console.log(res.data);
-    // });
+    http.delete(`/analytics`).then((res) => {
+      // console.log(res.data);
+    });
   }
 
   return (
