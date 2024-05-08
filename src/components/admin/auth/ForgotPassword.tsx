@@ -26,7 +26,7 @@ function ForgotPasswordComponent( {}: any ) {
   const [snackbarType, setSnackbarType] = useState<AlertColor>("info"); // info, warning, error, success
 
   const resetPassword = () => {
-    http.post('/admin/auth/password_reset', {
+    http.post('/auth/password_reset', {
       email: email,
       new_password: password
     }).then((res) => {

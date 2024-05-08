@@ -26,7 +26,7 @@ function ChangeEmailComponent( {}: any ) {
   const [snackbarType, setSnackbarType] = useState<AlertColor>("info"); // info, warning, error, success
 
   const resetPassword = () => {
-    http.post('/admin/auth/email_change', {
+    http.post('/auth/email_change', {
       email: email,
       new_email: newEmail
     }).then((res) => {
