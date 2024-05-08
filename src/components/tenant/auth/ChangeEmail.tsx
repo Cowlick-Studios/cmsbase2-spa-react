@@ -36,7 +36,7 @@ function ChangeEmailComponent( {}: any ) {
       url = `https://${tld}/tenant/${tenant}`;
     }
 
-    axios.post(`${url}/admin/auth/email_change`, {
+    axios.post(`${url}/auth/email_change`, {
       email: email,
       new_email: newEmail
     }).then((res) => {
