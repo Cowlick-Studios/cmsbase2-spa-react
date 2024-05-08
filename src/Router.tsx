@@ -8,6 +8,7 @@ import TenantPage from './pages/admin/TenantPage';
 import UserPage from './pages/admin/UserPage';
 import LoginPage from './pages/LoginPage';
 import UnknownPage from './pages/UnknownPage';
+import { AuthPage as AdminAuthPage } from './pages/admin/AuthPage';
 
 // Tenant
 import {DashboardPage as TenantDashboardPage } from './pages/tenant/DashboardPage';
@@ -22,6 +23,7 @@ import { PagesPage } from './pages/tenant/PagesPage';
 import { ItemPage } from './pages/tenant/ItemPage';
 import { ClientAnalyticsPage } from './pages/tenant/ClientAnalytics';
 import { PagesDocumentPage } from './pages/tenant/PagesDocumentPage';
+import { AuthPage } from './pages/tenant/AuthPage';
 
 function Router() {
   return (
@@ -50,6 +52,12 @@ function Router() {
             <UserPage/>
           </RequireAuthComponent>
         }/>
+        <Route path="/admin/auth" element={ 
+          <RequireAuthComponent enforce={false}>
+            <AdminAuthPage/>
+          </RequireAuthComponent>
+        }/>
+
 
         {/* Tenant */}
         <Route path="/" element={
@@ -121,6 +129,12 @@ function Router() {
         <Route path="/settings" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <SettingsPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/auth" element={ 
+          <RequireAuthComponent enforce={false}>
+            <AuthPage/>
           </RequireAuthComponent>
         }/>
 

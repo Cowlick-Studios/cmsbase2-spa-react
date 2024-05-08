@@ -109,6 +109,9 @@ function LoginComponent( {}: any ) {
             login();
           }}>Login</Button>
         </CardActions>
+        <CardActions>
+          <A to={`/auth`}>Forgot password / change email?</A>
+        </CardActions>
       </Card>
 
       <Snackbar

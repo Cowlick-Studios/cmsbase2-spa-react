@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../services/http';
-import { AppContext } from '../../contexts/AppContext';
+import {http, axios} from '../../../services/http';
+import { AppContext } from '../../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -12,52 +12,45 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
-import Alert, {AlertProps} from '@mui/material/Alert';
+import Alert, {AlertProps, AlertColor} from '@mui/material/Alert';
 
-function LoginComponent( {}: any ) {
+function ChangeEmailComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
 
+  const [tenant, setTenant] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [newEmail, setNewEmail] = useState("");
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarType, setSnackbarType] = useState<string>("info"); // info, warning, error, success
+  const [snackbarType, setSnackbarType] = useState<AlertColor>("info"); // info, warning, error, success
 
-  const login = () => {
-    http.post('/auth/login', {
+  const resetPassword = () => {
+
+    let url = "";
+    const tld = process.env.REACT_APP_TLD;
+    if(tld === "localhost"){
+      url = `http://${tld}/tenant/${tenant}`;
+    } else {
+      url = `https://${tld}/tenant/${tenant}`;
+    }
+
+    axios.post(`${url}/admin/auth/email_change`, {
       email: email,
-      password: password
+      new_email: newEmail
     }).then((res) => {
-
       console.log(res.data);
-
-      AppContextState.setAccessToken(res.data.access_token);
-      AppContextState.setUser(res.data.user);
-      AppContextState.setTenant(res.data?.tenant);
-      // AppContextState.setConfig(res.data?.config);
-
-      localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      localStorage.setItem("tenant", JSON.stringify(res.data?.tenant));
-      // localStorage.setItem("config", JSON.stringify(res.data?.config));
-
-      setEmail("");
-      setPassword("");
-
       setSnackbarType("success");
-      setSnackbarMessage(res.data.message);
+      setSnackbarMessage(res?.data?.message);
       setSnackbarOpen(true);
-
-      navigate('/admin');
     }).catch((error) => {
       setSnackbarType("error");
       setSnackbarMessage(error.response?.data?.message);
       setSnackbarOpen(true);
 
       setEmail("");
-      setPassword("");
+      setNewEmail("");
     });
   }
 
@@ -75,8 +68,14 @@ function LoginComponent( {}: any ) {
           >
             <Grid item xs={12}>
               <Typography gutterBottom variant="h5" component="h5">
-                Admin Login
+                Change Email
               </Typography>
+              {/* <p>Enter your existing account email and the new email address. It is required to verify both via email.</p> */}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth id="outlined-basic" label="Tenant" variant="outlined" type="text" value={tenant} onChange={(e) => {
+                setTenant(e.target.value);
+              }} />
             </Grid>
             <Grid item xs={12}>
               <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" type="email" value={email} onChange={(e) => {
@@ -84,19 +83,19 @@ function LoginComponent( {}: any ) {
               }} />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" type="password" value={password} onChange={(e) => {
-                setPassword(e.target.value);
+              <TextField fullWidth id="outlined-basic" label="New Email" variant="outlined" type="email" value={newEmail} onChange={(e) => {
+                setNewEmail(e.target.value);
               }} />
             </Grid>
           </Grid>
         </CardContent>
         <CardActions>
           <Button fullWidth variant="contained" onClick={() => {
-            login();
-          }}>Login</Button>
+            resetPassword();
+          }}>Change</Button>
         </CardActions>
         <CardActions>
-          <A to={`/admin/auth`}>Forgot password / change email?</A>
+          <A to={`/login`}>Back to login</A>
         </CardActions>
       </Card>
 
@@ -106,10 +105,11 @@ function LoginComponent( {}: any ) {
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <Alert severity="error">{snackbarMessage}</Alert>
+        {}
+        <Alert severity={snackbarType}>{snackbarMessage}</Alert>
       </Snackbar>
     </>
   );
 }
 
-export {LoginComponent};
+export {ChangeEmailComponent};

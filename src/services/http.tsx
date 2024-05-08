@@ -18,9 +18,9 @@ const getBaseUrl = () => {
   }
 
   if(tld === "localhost"){
-    return `http://${tld}`;
+    return `http://${tld}/admin`;
   }
-  return `https://${tld}`;
+  return `https://${tld}/admin`;
 }
 
 let axiosInstance = axios.create({
