@@ -11,6 +11,7 @@ import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Editor from '../../../components/utility/Editor';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -102,8 +103,11 @@ function UpdateItemComponent( {open, setOpen, items, setItems, item}: any ) {
 
               {['richText'].includes(item?.type?.name) && (
                 <Grid item xs={12} key={`InputField-${item.id}`}>
-                  <TextField multiline rows={6} fullWidth id="outlined" label={item.name} variant="outlined" type="text" value={newItemValue} onChange={(e) => {
+                  {/* <TextField multiline rows={6} fullWidth id="outlined" label={item.name} variant="outlined" type="text" value={newItemValue} onChange={(e) => {
                     setNewItemValue(e.target.value);
+                  }} /> */}
+                  <Editor label={item.name} data={newItemValue} onChange={(data: string) => {
+                    setNewItemValue(data);
                   }} />
                 </Grid>
               )}

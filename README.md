@@ -44,3 +44,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## CKEditor5
+
+Follow this [documentation](https://ckeditor.com/docs/ckeditor5/latest/installation/integrations/react/react.html#integrating-a-build-from-the-online-builder) to create a new or updated build of CKEditor5.
+
+We are using CKEditor for our WYSIWYG editor. To obtain the features we require we have created a custom build using the [CKEitor5 online builder](https://ckeditor.com/ckeditor-5/online-builder/) with a custom configuration. This build is then added to the root of the project and added to our packages with `npm install file:./ckeditor5` which we import in the Editor utility component and passed to the CKEditor5 React component.

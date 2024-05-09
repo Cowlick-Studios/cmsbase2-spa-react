@@ -10,6 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Editor from '../../../components/utility/Editor';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -132,8 +133,11 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                 } else if(['richText'].includes(field.type.name)){
                   return (
                     <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
-                      <TextField multiline rows={6} fullWidth id="outlined" label={field.name} variant="outlined" type="text" onChange={(e) => {
+                      {/* <TextField multiline rows={6} fullWidth id="outlined" label={field.name} variant="outlined" type="text" onChange={(e) => {
                         updateRequestObj(field.name, e.target.value);
+                      }} /> */}
+                      <Editor label={field.name} data={""} onChange={(data: string) => {
+                        updateRequestObj(field.name, data);
                       }} />
                     </Grid>
                   );

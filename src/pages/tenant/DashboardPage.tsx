@@ -8,6 +8,8 @@ import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
 
+import Editor from '../../components/utility/Editor';
+
 import DatabaseStorageLimitComponent from '../../components/tenant/Dashboard/DatabaseStorageLimitComponent';
 import FileStorageLimitComponent from '../../components/tenant/Dashboard/FileStorageLimitComponent';
 import DailyRequestCountComponent from '../../components/tenant/Dashboard/DailyRequestCountComponent';
@@ -45,6 +47,10 @@ function DashboardPage() {
             <DailyRequestCountComponent dashboardData={dashboardData}/>
           </Grid>
         ) : (<></>)}
+
+        <Grid item xs={12}> 
+          <Editor label="Test YSIWYG" />
+        </Grid>
 
       </Grid>
     </>
