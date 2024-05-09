@@ -23,10 +23,14 @@ import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+
+import MultiSelect from '../../components/utility/MultiSelect';
 
 import { UploadImageComponent } from '../../components/tenant/media/UploadImageComponent';
 import { ImageUpdateModalComponent } from '../../components/tenant/media/ImageUpdateModalComponent';
@@ -50,14 +54,7 @@ function MediaPage( {}: any ) {
     });
 
     http.get(`/file_collection`).then((res: any) => {
-      setCollections([{
-        id: 0,
-        name: "ALL"
-      }, ...res.data.collections]);
-      setSelectedCollection({
-        id: 0,
-        name: "ALL"
-      });
+      setCollections(res.data.collections);
     });
   }, []);
 
@@ -74,31 +71,24 @@ function MediaPage( {}: any ) {
     });
   }
 
-  const selectCollection = (event: any) => {
-
-    if(event.target.value.id == 0){
-      setSelectedCollection(null);
-    } else {
-      setSelectedCollection(event.target.value);
-    }
-
-    http.get(`/file`, {
-      params: {
-        collection_id: event.target.value.id
-      }
-    }).then((res: any) => {
-      console.log(res);
-      setImages(res.data.files);
-    });
-
-  }
-
   const createNewCollection = () => {
     http.post(`/file_collection`, {
       name: newCollectionName
     }).then((res: any) => {
       setNewCollectionName("");
       setCollections([...collections, res.data.collection,]);
+    });
+  }
+
+  const selectCollection = (event: any) => {
+    setSelectedCollection(event.target.value);
+    http.get(`/file`, {
+      params: {
+        collection_id: event.target.value?.id
+      }
+    }).then((res: any) => {
+      console.log(res);
+      setImages(res.data.files);
     });
   }
 
@@ -115,7 +105,7 @@ function MediaPage( {}: any ) {
               setTileView(e.target.checked);
             }} />} label="Tile View" />
           </Grid>
-          <Grid item xs={6} container>
+          <Grid item spacing={2} xs={6} container>
             <Grid item xs={10}>
               <TextField fullWidth label="New Collection" variant="outlined" value={newCollectionName} onChange={(e) => {
                     setNewCollectionName(e.target.value);
@@ -125,21 +115,32 @@ function MediaPage( {}: any ) {
               <Button variant="contained" onClick={createNewCollection}>Create</Button>
             </Grid>
             <Grid item xs={12}>
-              <Select
-                fullWidth
-                value={selectedCollection}
-                label="Collection"
-                onChange={selectCollection}
-              >
-                {collections.map((collection) => (
+              {/* <MultiSelect options={collections} label="File Collection" onChange={onCollectionSelect}/> */}
+              <FormControl fullWidth>
+                <InputLabel id={`select-collection-search-file`}>Select Collection</InputLabel>
+                <Select
+                  labelId={`select-collection-search-file`}
+                  fullWidth
+                  value={selectedCollection}
+                  label="Select Collection"
+                  input={<OutlinedInput label="Select Collection" />}
+                  onChange={selectCollection}
+                >
+                  {collections.map((option: any) => (
+                    <MenuItem
+                      key={option.id}
+                      value={option}
+                    >
+                      {option.name}
+                    </MenuItem>
+                  ))}
+
                   <MenuItem
-                    key={collection.id}
-                    value={collection}
-                  >
-                    {collection.name}
-                  </MenuItem>
-                ))}
-              </Select>
+                    key='deselect'
+                    value={undefined}
+                  ><b>CLEAR</b></MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </Grid>

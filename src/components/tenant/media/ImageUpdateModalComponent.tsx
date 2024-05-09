@@ -24,8 +24,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 import CloseIcon from '@mui/icons-material/Close';
+
+import MultiSelect from '../../../components/utility/MultiSelect';
 
 import Modal from '../../utility/Modal';
 
@@ -38,10 +39,10 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
   const [caption, setCaption] = useState("");
 
   useEffect(() => {
+    console.log(image);
     setName(image.name || "");
     setAltText(image.alternative_text || "");
     setCaption(image.caption || "");
-    setFileCollections(image.collections || []);
   }, [image]);
 
   const handleOpen = () => {
@@ -84,18 +85,11 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
     });
   }
 
-  const [fileCollections, setFileCollections] = useState<String[]>([]);
-
-  const multiSelectCollection = (event: any) => {
-    console.log(event.target.value);
-    setFileCollections(event.target.value);
-
-    const collectionIds: any[] = event.target.value.map((collection: any) => {
-      return collection.id
-    });
-
+  const onCollectionSelect = (values: any[]) => {
     http.patch(`/file/${image.id}/collection`, {
-      collection_ids: collectionIds
+      collection_ids: values.map((value: any) => {
+        return value.id;
+      })
     }).then((res: any) => {
       console.log(res);
     });
@@ -139,20 +133,7 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
 
                 {/* Multi select group */}
                 <Grid item xs={12}>
-                  <Select
-                    multiple
-                    value={fileCollections}
-                    onChange={multiSelectCollection}
-                  >
-                    {collections.map((collection: any) => (
-                      <MenuItem
-                        key={collection.id}
-                        value={collection}
-                      >
-                        {collection.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <MultiSelect options={collections} label="Collections" onChange={onCollectionSelect}/>
                 </Grid>
 
                 <Grid container item xs={12} gap={1}>
