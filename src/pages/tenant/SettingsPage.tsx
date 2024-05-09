@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import { FieldTypesComponent } from '../../components/tenant/settings/FieldTypesComponent';
 import { RequestLoggingComponent } from '../../components/tenant/settings/RequestLoggingComponent';
 import { ClientRequestLoggingComponent } from '../../components/tenant/settings/ClientRequestLoggingComponent';
+import { PublicRegisterComponent } from '../../components/tenant/settings/PublicRegisterComponent';
 
 function SettingsPage() {
   const navigate = useNavigate();
@@ -28,6 +29,9 @@ function SettingsPage() {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FieldTypesComponent/>
+        </Grid>
+        <Grid item xs={12}>
+          <PublicRegisterComponent settings={settings}/>
         </Grid>
         <Grid item xs={12}>
           <RequestLoggingComponent settings={settings}/>
