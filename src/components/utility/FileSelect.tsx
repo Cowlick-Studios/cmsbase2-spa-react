@@ -38,14 +38,16 @@ function FileSelect({onChange, preselectFileId = null}: any) {
   useEffect(() => {
     http.get('/file').then((res) => {
       setFiles(res.data.files);
-
-      if(preselectFileId){
-        setSelectedFile(res.data.files.find((file: any) => {
-          return file.id === preselectFileId;
-        }));
-      }
     });
   }, []);
+
+  useEffect(() => {
+    if(preselectFileId){
+      setSelectedFile(files?.find((file: any) => {
+        return file.id == preselectFileId;
+      }));
+    }
+  }, [preselectFileId, files]);
 
   return (
     <>
