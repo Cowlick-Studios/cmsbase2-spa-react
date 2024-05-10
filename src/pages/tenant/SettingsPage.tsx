@@ -11,6 +11,7 @@ import { FieldTypesComponent } from '../../components/tenant/settings/FieldTypes
 import { RequestLoggingComponent } from '../../components/tenant/settings/RequestLoggingComponent';
 import { ClientRequestLoggingComponent } from '../../components/tenant/settings/ClientRequestLoggingComponent';
 import { PublicRegisterComponent } from '../../components/tenant/settings/PublicRegisterComponent';
+import { EmailSubmissionSetingsComponent } from '../../components/tenant/settings/EmailSubmissionSetingsComponent';
 
 function SettingsPage() {
   const navigate = useNavigate();
@@ -38,6 +39,9 @@ function SettingsPage() {
         </Grid>
         <Grid item xs={12}>
           <ClientRequestLoggingComponent settings={settings}/>
+        </Grid>
+        <Grid item xs={12}>
+          <EmailSubmissionSetingsComponent settings={settings}/>
         </Grid>
       </Grid>
     </>
