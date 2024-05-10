@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Editor from '../../../components/utility/Editor';
+import FileSelect from '../../utility/FileSelect';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -182,6 +183,14 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                           width: '100%'
                         }} />
                       </LocalizationProvider>
+                    </Grid>
+                  );
+                } else if(['file'].includes(field.type.name)){
+                  return (
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
+                      <FileSelect onChange={(file: any) => {
+                        updateRequestObj(field.name, file.id);
+                      }}/>
                     </Grid>
                   );
                 }

@@ -12,12 +12,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Modal from './Modal';
 
-function FileSelect({onChange}: any) {
+function FileSelect({onChange, preselectFileId = null}: any) {
 
   const AppContextState: any = useContext(AppContext);
 
   const [files, setFiles] = useState<any[]>([]);
-  const [selectedFile, setSelectedFile] = useState<any>(undefined);
+  const [selectedFile, setSelectedFile] = useState<any>(null);
   const [openModal, setopenModal] = useState<boolean>(false);
 
   const selectFile = (file: any) => {
@@ -27,8 +27,8 @@ function FileSelect({onChange}: any) {
   }
 
   const removeSelectedFile = () => {
-    setSelectedFile(undefined);
-    onChange(undefined);
+    setSelectedFile(null);
+    onChange(null);
   }
 
   const openFileModal = () => {
@@ -38,6 +38,12 @@ function FileSelect({onChange}: any) {
   useEffect(() => {
     http.get('/file').then((res) => {
       setFiles(res.data.files);
+
+      if(preselectFileId){
+        setSelectedFile(res.data.files.find((file: any) => {
+          return file.id === preselectFileId;
+        }));
+      }
     });
   }, []);
 

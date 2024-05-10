@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Editor from '../../../components/utility/Editor';
+import FileSelect from '../../utility/FileSelect';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -152,6 +153,14 @@ function UpdateItemComponent( {open, setOpen, items, setItems, item}: any ) {
                       width: '100%'
                     }} />
                   </LocalizationProvider>
+                </Grid>
+              )}
+
+              {['file'].includes(item?.type?.name) && (
+                <Grid item xs={12} key={`InputField-${item.id}`}>
+                  <FileSelect preselectFileId={newItemValue} onChange={(file: any) => {
+                    setNewItemValue(file.id);
+                  }}/>
                 </Grid>
               )}
 
