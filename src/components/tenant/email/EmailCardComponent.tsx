@@ -31,6 +31,7 @@ function EmailCardComponent( {emailSubmission, emailSubmissions, setEmailSubmiss
   const AppContextState: any = useContext(AppContext);
 
   const [selectedAdmins, setSelectedAdmins] = useState<any>([]);
+  const [origin, setOrigin] = useState("");
 
   useEffect(() => {
     if(emailSubmission.recipients){
@@ -38,7 +39,16 @@ function EmailCardComponent( {emailSubmission, emailSubmissions, setEmailSubmiss
         return adminUser.id;
       }));
     }
+    setOrigin(emailSubmission.origin);
   }, [emailSubmission]);
+
+  const updateOrigin = () => {
+    http.patch(`/email_submission/${emailSubmission.id}`, {
+      origin: origin !== "" ? origin : null
+    }).then((res: any) => {
+      console.log(res.data);
+    });
+  }
 
   const deleteEmailSubmission = (emailSubmission: any) => {
     http.delete(`/email_submission/${emailSubmission.id}`).then(() => {
@@ -106,6 +116,20 @@ function EmailCardComponent( {emailSubmission, emailSubmissions, setEmailSubmiss
                 </Select>
               </FormControl>
             </Grid>
+
+            <Grid item xs={12} container spacing={2} sx={{
+              padding: '10px'
+            }}>
+              <Grid item xs={10}>
+                <TextField fullWidth id="outlined-basic" label="Field Name" variant="outlined" type="text" value={origin} size="small" onChange={(e) => {
+                  setOrigin(e.target.value);
+                }} />
+              </Grid>
+              <Grid item xs={2}>
+                <Button fullWidth variant="contained" onClick={updateOrigin}>Update Origin</Button>
+              </Grid>
+            </Grid>
+
           </Grid>
         </CardContent>
 

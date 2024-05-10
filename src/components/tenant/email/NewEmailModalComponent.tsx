@@ -26,6 +26,7 @@ function NewEmailModalComponent( {open, setOpen, emailSubmissions, setEmailSubmi
   const AppContextState: any = useContext(AppContext);
 
   const [newEmailSubmissionName, setNewEmailSubmissionName] = useState("");
+  const [newEmailSubmissionOrigin, setNewEmailSubmissionOrigin] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -43,7 +44,8 @@ function NewEmailModalComponent( {open, setOpen, emailSubmissions, setEmailSubmi
 
   const createNewEmailSubmission = () => {
     http.post(`/email_submission`, {
-      name: newEmailSubmissionName
+      name: newEmailSubmissionName,
+      origin: newEmailSubmissionOrigin !== "" ? newEmailSubmissionOrigin : null
     }).then((res) => {
       setEmailSubmissions([...emailSubmissions, res.data.email_submission]);
       handleClose();
@@ -59,11 +61,19 @@ function NewEmailModalComponent( {open, setOpen, emailSubmissions, setEmailSubmi
             </Typography>
 
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField fullWidth label="Email Submission Name" variant="outlined" type="text" value={newEmailSubmissionName} onChange={(e) => {
-                  setNewEmailSubmissionName(e.target.value);
-                }} />
+              <Grid item xs={12} container spacing={1}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label="Email Submission Name" variant="outlined" type="text" value={newEmailSubmissionName} onChange={(e) => {
+                    setNewEmailSubmissionName(e.target.value);
+                  }} />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label="Email Submission Origin" variant="outlined" type="text" value={newEmailSubmissionOrigin} onChange={(e) => {
+                    setNewEmailSubmissionOrigin(e.target.value);
+                  }} />
+                </Grid>
               </Grid>
+
               <Grid container item xs={12} gap={1}>
                 <Button variant="contained" onClick={createNewEmailSubmission}>Create</Button>
                 <Button color="error" variant="contained" onClick={handleClose}>Close</Button>
