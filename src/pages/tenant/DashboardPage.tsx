@@ -52,12 +52,7 @@ function DashboardPage() {
             <DailyRequestCountComponent dashboardData={dashboardData}/>
           </Grid>
         ) : (<></>)}
-
-        <Grid item xs={12}> 
-          {/* <Editor label="Test YSIWYG" /> */}
-          <FileSelect onChange={imageSelected}/>
-        </Grid>
-
+        
       </Grid>
     </>
   );
