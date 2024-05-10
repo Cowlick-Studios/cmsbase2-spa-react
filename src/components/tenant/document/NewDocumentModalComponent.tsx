@@ -101,14 +101,13 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
 
   return (
     <>
-      <Modal open={open} onClose={handleClose}>
-        <Card variant='outlined'>
-          <CardContent>
+      <Modal open={open} setOpen={setOpen} onClose={handleClose}>
+
             <Grid container spacing={2}>
               {sortedCollectionFields.map((field: any) => { // 1/4 = 3, 1/3 = 4, 1/2 = 6, 1 = 12
                 if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       <TextField fullWidth id="outlined" label={field.name} variant="outlined" type="number" onChange={(e) => {
                         updateRequestObj(field.name, e.target.value);
                       }} />
@@ -116,7 +115,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                   );
                 } else if(['char', 'string', 'tinyText'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       <TextField fullWidth id="outlined" label={field.name} variant="outlined" type="text" onChange={(e) => {
                         updateRequestObj(field.name, e.target.value);
                       }} />
@@ -124,7 +123,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                   );
                 } else if(['text', 'mediumText', 'longText'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       <TextField multiline rows={6} fullWidth id="outlined" label={field.name} variant="outlined" type="text" onChange={(e) => {
                         updateRequestObj(field.name, e.target.value);
                       }} />
@@ -132,7 +131,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                   );
                 } else if(['richText'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       {/* <TextField multiline rows={6} fullWidth id="outlined" label={field.name} variant="outlined" type="text" onChange={(e) => {
                         updateRequestObj(field.name, e.target.value);
                       }} /> */}
@@ -143,7 +142,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                   );
                 } else if(['boolean'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       <FormControlLabel control={<Switch defaultChecked={newDocumentRequestObject[field.name]} onChange={(e) => {
                         updateRequestObj(field.name, e.target.checked);
                       }} />} label={field.name} />
@@ -151,7 +150,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                   );
                 } else if(['date'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker label={field.name} onChange={(e: any) => {
                           updateRequestObj(field.name, new Date(e.$d).toLocaleDateString());
@@ -163,7 +162,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                   );
                 } else if(['time'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <TimePicker label={field.name} onChange={(e: any) => {
                           updateRequestObj(field.name, new Date(e.$d).toLocaleTimeString());
@@ -175,7 +174,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                   );
                 } else if(['dateTime', 'timestamp'].includes(field.type.name)){
                   return (
-                    <Grid item xs={6} key={`CollectionDocumentInputField-${field.id}`}>
+                    <Grid item xs={12} key={`CollectionDocumentInputField-${field.id}`}>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker label={field.name} onChange={(e: any) => {
                           updateRequestObj(field.name, new Date(e.$d).toLocaleString());
@@ -195,8 +194,7 @@ function NewDocumentModalComponent( {open, setOpen, collection, collectionFields
                 <Button variant="contained" color="error" onClick={handleClose}>Close</Button>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
+
       </Modal>
     </>
   );

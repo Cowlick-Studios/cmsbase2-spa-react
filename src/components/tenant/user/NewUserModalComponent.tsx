@@ -61,11 +61,8 @@ function NewUserModalComponent( {open, setOpen, users, setUsers}: any ) {
 
   return (
     <>
-      <Modal open={open} onClose={handleClose}>
-        <Card sx={{
-          padding: '10px'
-        }}>
-          <CardContent>
+      <Modal open={open} setOpen={setOpen} onClose={handleClose}>
+
             <Typography gutterBottom variant="h4" component="h5">
               Create new user.
             </Typography>
@@ -97,8 +94,7 @@ function NewUserModalComponent( {open, setOpen, users, setUsers}: any ) {
                 <Button color="error" variant="contained" onClick={handleClose}>Close</Button>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
+
       </Modal>
     </>
   );

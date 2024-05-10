@@ -63,11 +63,8 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
 
   return (
     <>
-      <Modal open={open} onClose={handleClose}>
-        <Card sx={{
-          padding: '10px'
-        }}>
-          <CardContent>
+      <Modal open={open} setOpen={setOpen} onClose={handleClose}>
+
             <Typography gutterBottom variant="h4" component="h5">
               Create new item.
             </Typography>
@@ -107,8 +104,7 @@ function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
               </Grid>
 
             </Grid>
-          </CardContent>
-        </Card>
+
       </Modal>
     </>
   );

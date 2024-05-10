@@ -22,18 +22,26 @@ function Editor({label = "", data = "", onChange}: any) {
           <CKEditor
             editor={ ClassicEditorCustom }
             data={data}
-            onReady={ editor => {
+            onReady={ (editor: any) => {
               // You can store the "editor" and use when it is needed.
               console.log( 'Editor is ready to use!', editor );
+              editor.ui.view.editable.element.style.minHeight = "400px";
+              editor.ui.view.editable.element.style.maxHeight = "70vh";
             }}
-            onChange={ ( event, editor ) => {
+            onChange={ ( event, editor: any ) => {
               onChange( editor.getData() );
+              editor.ui.view.editable.element.style.minHeight = "400px";
+              editor.ui.view.editable.element.style.maxHeight = "70vh";
             }}
-            onBlur={ ( event, editor ) => {
+            onBlur={ ( event, editor: any ) => {
               console.log( 'Blur:', editor );
+              editor.ui.view.editable.element.style.minHeight = "400px";
+              editor.ui.view.editable.element.style.maxHeight = "70vh";
             }}
-            onFocus={( event, editor ) => {
+            onFocus={( event, editor: any ) => {
               console.log( 'Focus:', editor );
+              editor.ui.view.editable.element.style.minHeight = "400px";
+              editor.ui.view.editable.element.style.maxHeight = "70vh";
             }}
           />
         </CardContent>

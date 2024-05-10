@@ -72,9 +72,8 @@ function UpdateItemComponent( {open, setOpen, items, setItems, item}: any ) {
 
   return (
     <>
-      <Modal open={open} onClose={handleClose}>
-        <Card variant='outlined'>
-          <CardContent>
+      <Modal open={open} setOpen={setOpen} onClose={handleClose}>
+
             <Grid container spacing={2}>
 
               {['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(item?.type?.name) && (
@@ -161,8 +160,7 @@ function UpdateItemComponent( {open, setOpen, items, setItems, item}: any ) {
                 <Button variant="contained" color="error" onClick={handleClose}>Close</Button>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
+
       </Modal>
     </>
   );

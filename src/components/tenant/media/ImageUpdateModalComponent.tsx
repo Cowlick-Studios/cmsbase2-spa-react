@@ -97,11 +97,8 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
 
   return (
     <>
-      <Modal open={open} onClose={handleClose}>
-        <Card sx={{
-          padding: '10px'
-        }}>
-          <CardContent>
+      <Modal open={open} setOpen={setOpen} onClose={handleClose}>
+
             <Grid container spacing={2}>
 
               <Grid container item xs={6}>
@@ -143,8 +140,7 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
               </Grid>
 
             </Grid>
-          </CardContent>
-        </Card>
+
       </Modal>
     </>
   );

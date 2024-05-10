@@ -64,11 +64,8 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
 
   return (
     <>
-      <Modal open={open} onClose={handleClose}>
-        <Card sx={{
-          padding: '10px'
-        }}>
-          <CardContent>
+      <Modal open={open} setOpen={setOpen} onClose={handleClose}>
+
             <Typography gutterBottom variant="h4" component="h5">
               Update tenant.
             </Typography>
@@ -93,8 +90,7 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
                 <Button color="error" variant="contained" onClick={handleClose}>Close</Button>
               </Grid>
             </Grid>
-          </CardContent>
-        </Card>
+
       </Modal>
     </>
   );

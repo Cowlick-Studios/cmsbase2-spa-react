@@ -9,6 +9,7 @@ import { AppContext } from '../../contexts/AppContext';
 import Grid from '@mui/material/Grid';
 
 import Editor from '../../components/utility/Editor';
+import FileSelect from '../../components/utility/FileSelect';
 
 import DatabaseStorageLimitComponent from '../../components/tenant/Dashboard/DatabaseStorageLimitComponent';
 import FileStorageLimitComponent from '../../components/tenant/Dashboard/FileStorageLimitComponent';
@@ -19,6 +20,10 @@ function DashboardPage() {
   const AppContextState: any = useContext(AppContext);
 
   const [dashboardData, setDashboardData] = useState<any>({});
+
+  const imageSelected = (file: any) =>{
+    console.log(file);
+  }
 
   useEffect(() => {
     http.get(`/dashboard`).then((res) => {
@@ -49,7 +54,8 @@ function DashboardPage() {
         ) : (<></>)}
 
         <Grid item xs={12}> 
-          <Editor label="Test YSIWYG" />
+          {/* <Editor label="Test YSIWYG" /> */}
+          <FileSelect onChange={imageSelected}/>
         </Grid>
 
       </Grid>
