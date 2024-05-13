@@ -3,6 +3,7 @@ import { useNavigate, Link as A } from 'react-router-dom';
 import {http, axios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 import generateUrl from '../../utility/generateUrl';
+import numeral from 'numeral';
 
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -172,7 +173,7 @@ function MediaPage( {}: any ) {
                     <TableCell>File Name</TableCell>
                     <TableCell>Mime Type</TableCell>
                     <TableCell>Dimension (W/H)</TableCell>
-                    <TableCell>File Size (bytes)</TableCell>
+                    <TableCell>File Size (MB)</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
@@ -195,7 +196,7 @@ function MediaPage( {}: any ) {
                       <TableCell>{image.file}</TableCell>
                       <TableCell>{image.mime_type}</TableCell>
                       <TableCell>{image.width}px / {image.height}px</TableCell>
-                      <TableCell>{image.size} bytes</TableCell>
+                      <TableCell>{numeral(image.size / (1024 * 1024)).format('0,0.00')} MB</TableCell>
 
                       <TableCell align="right">
 
