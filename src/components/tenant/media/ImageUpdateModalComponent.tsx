@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import generateUrl from '../../../utility/generateUrl';
 
@@ -33,6 +33,7 @@ import Modal from '../../utility/Modal';
 function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, collections}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [name, setName] = useState("");
   const [altText, setAltText] = useState("");

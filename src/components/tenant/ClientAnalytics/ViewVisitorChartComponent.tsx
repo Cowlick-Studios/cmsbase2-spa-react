@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -19,6 +19,7 @@ type ChartFrequencies = 'D' | 'W' | 'M' | 'Y';
 function ViewVisitorChartComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [clientAnalytics, setClientAnalytics]: any = useState([]);
   const [chartFrequency, setChartFrequency]: any = useState<ChartFrequencies>('D');

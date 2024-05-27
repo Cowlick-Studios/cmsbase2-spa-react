@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import { UserContext } from '../../../contexts/admin/UserContext';
 
@@ -22,6 +22,7 @@ function NewUserModalComponent( {open, setOpen}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
   const UserContextState: any = useContext(UserContext);
+  const http = useAxios();
 
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../services/http';
+import {useAxios, axios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -12,6 +12,7 @@ import NewPageModalComponent from '../../components/tenant/page/NewPageModalComp
 function PagesPage( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [pages, setPages] = useState<any>([]);
   const [openNewPageModal, setOpenNewPageModal] = useState(false);

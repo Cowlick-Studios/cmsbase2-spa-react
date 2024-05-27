@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -26,6 +26,7 @@ import Switch from '@mui/material/Switch';
 function RequestLoggingComponent( {settings}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const settingName = "request_logging";
 

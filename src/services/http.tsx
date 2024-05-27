@@ -6,6 +6,7 @@ const getBaseUrl = () => {
 
   let tenant = null;
   const tenantLocal = localStorage.getItem("tenant");
+
   if(tenantLocal){
     tenant = JSON.parse(tenantLocal);
   }
@@ -23,42 +24,53 @@ const getBaseUrl = () => {
   return `https://${tld}/admin`;
 }
 
-let axiosInstance = axios.create({
-	baseURL: getBaseUrl(),
-	headers: {
-		'Content-Type': 'application/json',
-	},
-});
-
-axiosInstance.interceptors.request.use((request) => {
-  let accessToken = localStorage.getItem("access_token");
-	if (accessToken && request.headers) {
-		request.headers['Authorization'] = `Bearer ${JSON.parse(accessToken)}`;
-	}
-	return request;
-});
-
-axiosInstance.interceptors.response.use((response) => { 
-  return response;
-}, (error) => {
-  if(error.response.status < 200 || error.response.status >= 300){
-    switch(error.response.status) {
-      case 401:
-        // document.dispatchEvent(new CustomEvent('response_401', {
-        //   detail: { message: error.response.data.message },
-        // }));
-        break;
+const generateAxiosInstance = () => {
+  let axiosInstance = axios.create({
+    baseURL: getBaseUrl(),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  
+  axiosInstance.interceptors.request.use((request) => {
+    let accessToken = localStorage.getItem("access_token");
+    if (accessToken && request.headers) {
+      request.headers['Authorization'] = `Bearer ${JSON.parse(accessToken)}`;
     }
+    return request;
+  });
+  
+  axiosInstance.interceptors.response.use((response) => { 
+    return response;
+  }, (error) => {
+    if(error.response.status < 200 || error.response.status >= 300){
+      switch(error.response.status) {
+        case 401:
+          document.dispatchEvent(new CustomEvent('response_401', {
+            detail: { message: error.response.data.message },
+          }));
+          break;
+      }
+  
+      document.dispatchEvent(new CustomEvent('request_error', {
+        detail: { 
+          message: error.response.data.message 
+        },
+      }));
+  
+      return error.response;
+    }
+  });
 
-    document.dispatchEvent(new CustomEvent('request_error', {
-      detail: { 
-        message: error.response.data.message 
-      },
-    }));
+  return axiosInstance;
+}
 
-    return error.response;
-  }
-});
+const useAxios = () => {
+  return generateAxiosInstance();
+};
+
+let axiosInstance = generateAxiosInstance();
 
 export { axiosInstance as http };
 export { axios };
+export { useAxios };

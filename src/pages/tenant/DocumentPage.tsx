@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A, useParams } from 'react-router-dom';
 import numeral from 'numeral';
 
-import {axios, http} from '../../services/http';
+import {axios, useAxios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -14,6 +14,7 @@ import { NewDocumentModalComponent } from '../../components/tenant/document/NewD
 function DocumentPage() {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
   let {collectionName} = useParams();
 
   const [collection, setCollection] = useState<any>({});

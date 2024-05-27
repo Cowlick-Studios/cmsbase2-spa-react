@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A, useLocation } from 'react-router-dom';
-import {axios, http} from '../../services/http';
+import {axios, useAxios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 
 import List from '@mui/material/List';
@@ -34,6 +34,7 @@ function MenuComponent( {children, enforce = true}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
   const location = useLocation();
+  const http = useAxios();
 
   const [collectionOpen, setCollectionOpen] = useState(false);
   const [pageOpen, setPageOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../services/http';
+import {useAxios, axios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -17,6 +17,7 @@ import { AnalyticsScriptComponent } from '../../components/tenant/ClientAnalytic
 function ClientAnalyticsPage( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");

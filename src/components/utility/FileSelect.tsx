@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {axios, http} from '../../services/http';
+import {axios, useAxios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 import generateUrl from '../../utility/generateUrl';
 
@@ -15,6 +15,7 @@ import Modal from './Modal';
 function FileSelect({onChange, preselectFileId = null}: any) {
 
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [files, setFiles] = useState<any[]>([]);
   const [selectedFile, setSelectedFile] = useState<any>(null);

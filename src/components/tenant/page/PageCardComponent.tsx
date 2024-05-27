@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Box from '@mui/material/Box';
@@ -28,6 +28,7 @@ import { PageCardFieldsComponent } from './PageCardFieldsComponent';
 function PageCardComponent( {page, pages, setPages}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const deletePage = (page: any) => {
     http.delete(`/page/${page.id}`).then(() => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import { TenantContext } from '../../../contexts/admin/TenantContext';
 
@@ -24,6 +24,7 @@ import Modal from '../../utility/Modal';
 function NewCollectionModalComponent( {open, setOpen, collections, setCollections}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [newCollectionName, setNewCollectionName] = useState("");
   const [newCollectionPublicRead, setNewCollectionPublicRead] = useState(false);

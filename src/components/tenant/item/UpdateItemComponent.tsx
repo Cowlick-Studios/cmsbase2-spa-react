@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import dayjs from 'dayjs';
 
@@ -25,6 +25,7 @@ import Modal from '../../utility/Modal';
 function UpdateItemComponent( {open, setOpen, items, setItems, item}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [newItemValue, setNewItemValue] = useState<any>("");
 

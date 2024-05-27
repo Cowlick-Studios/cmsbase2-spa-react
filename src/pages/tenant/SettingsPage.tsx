@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
 import numeral from 'numeral';
 
-import {axios, http} from '../../services/http';
+import {axios, useAxios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -16,6 +16,7 @@ import { EmailSubmissionSetingsComponent } from '../../components/tenant/setting
 function SettingsPage() {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [settings, setSettings] = useState<any>([]);
 

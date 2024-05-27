@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -27,6 +27,7 @@ import TextField from '@mui/material/TextField';
 function EmailSubmissionSetingsComponent( {settings}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const defaultOriginSetting = "default_origin";
   const emailSubmissionLogsSetting = "email_submission_logs";

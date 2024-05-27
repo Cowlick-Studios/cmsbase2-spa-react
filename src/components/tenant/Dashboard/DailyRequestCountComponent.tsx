@@ -3,7 +3,7 @@ import { useNavigate, Link as A } from 'react-router-dom';
 import numeral from 'numeral';
 import bytesToGb from '../../../utility/bytesToGb';
 
-import {axios, http} from '../../../services/http';
+import {axios, useAxios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 function DailyRequestCountComponent({dashboardData}: any) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   // useEffect(() => {
 

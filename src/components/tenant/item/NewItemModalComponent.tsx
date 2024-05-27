@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import { TenantContext } from '../../../contexts/admin/TenantContext';
 
@@ -26,6 +26,7 @@ import Modal from '../../utility/Modal';
 function NewItemModalComponent( {open, setOpen, items, setItems}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [newItemTypeId, setNewItemTypeId] = useState(1);
   const [newItemName, setNewItemName] = useState("");

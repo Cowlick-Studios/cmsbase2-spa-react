@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import { TenantContext } from '../../../contexts/admin/TenantContext';
 import looseStringCompare from '../../../utility/loseStringCompare';
@@ -26,6 +26,7 @@ function TenantTableComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
   const TenantContextState: any = useContext(TenantContext);
+  const http = useAxios();
 
   const [searchedTenants, setSearchedTenants] = useState<any>([]);
   const [searchString, setSearchString] = useState('');

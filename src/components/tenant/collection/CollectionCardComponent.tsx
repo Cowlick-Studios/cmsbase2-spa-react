@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Box from '@mui/material/Box';
@@ -26,6 +26,7 @@ import { CollectionCardFieldsComponent } from './CollectionCardFieldsComponent';
 function CollectionCardComponent( {collection, collections, setCollections}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [publicRead, setPublicRead] = useState(false);
   const [publicCreate, setPublicCreate] = useState(false);

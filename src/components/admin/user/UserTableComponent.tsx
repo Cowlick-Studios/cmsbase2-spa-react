@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import { UserContext } from '../../../contexts/admin/UserContext';
 import looseStringCompare from '../../../utility/loseStringCompare';
@@ -24,6 +24,7 @@ function UserTableComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
   const UserContextState: any = useContext(UserContext);
+  const http = useAxios();
 
   const [searchedUsers, setSearchedUsers] = useState<any>([]);
   const [searchString, setSearchString] = useState('');

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../services/http';
+import {useAxios, axios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -17,6 +17,7 @@ import Alert, {AlertProps} from '@mui/material/Alert';
 function LoginComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [url, setUrl] = useState("");
   const [tenant, setTenant] = useState("");
@@ -39,7 +40,15 @@ function LoginComponent( {}: any ) {
     axios.post(`${url}/auth/login`, {
       email: email,
       password: password
-    }).then((res) => {
+    }).then(async(res) => {
+      await localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
+      await localStorage.setItem("user", JSON.stringify(res.data.user));
+      await localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
+      await localStorage.setItem("url", JSON.stringify(res.data.url));
+      await localStorage.setItem("collections", JSON.stringify(res.data.config.collections));
+      await localStorage.setItem("fieldTypes", JSON.stringify(res.data.config.field_types));
+      await localStorage.setItem("pages", JSON.stringify(res.data.config.pages));
+
       AppContextState.setAccessToken(res.data.access_token);
       AppContextState.setUser(res.data.user);
       AppContextState.setTenant(res.data.tenant);
@@ -47,14 +56,6 @@ function LoginComponent( {}: any ) {
       AppContextState.setCollections(res.data.config.collections);
       AppContextState.setFieldTypes(res.data.config.field_types);
       AppContextState.setPages(res.data.config.pages);
-
-      localStorage.setItem("access_token", JSON.stringify(res.data.access_token));
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      localStorage.setItem("tenant", JSON.stringify(res.data.tenant));
-      localStorage.setItem("url", JSON.stringify(res.data.url));
-      localStorage.setItem("collections", JSON.stringify(res.data.config.collections));
-      localStorage.setItem("fieldTypes", JSON.stringify(res.data.config.field_types));
-      localStorage.setItem("pages", JSON.stringify(res.data.config.pages));
 
       setEmail("");
       setPassword("");

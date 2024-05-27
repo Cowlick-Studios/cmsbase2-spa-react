@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Grid from '@mui/material/Grid';
@@ -16,6 +16,7 @@ import IconButton from '@mui/material/IconButton';
 function RequestTableComponent( {requests}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const componentRef = useRef<HTMLDivElement | null>(null);
 

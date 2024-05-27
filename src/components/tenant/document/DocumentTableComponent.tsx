@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Card from '@mui/material/Card';
@@ -22,6 +22,7 @@ import { UpdateDocumentComponent } from './UpdateDocumentComponent';
 function DocumentTableComponent( {collection, collectionFields, documents, setDocuments}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [openUpdateDocumentModal, setOpenUpdateDocumentModal] = useState(false);
   const [selectedUpdateDocument, setSelectedUpdateDocument] = useState<any>({});

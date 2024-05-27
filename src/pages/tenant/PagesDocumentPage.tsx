@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A, useParams } from 'react-router-dom';
-import {http, axios} from '../../services/http';
+import {useAxios, axios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
 
 import Button from '@mui/material/Button';
@@ -22,6 +22,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 function PagesDocumentPage( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   let {pageName} = useParams();
 

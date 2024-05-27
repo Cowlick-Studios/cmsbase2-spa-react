@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import Box from '@mui/material/Box';
@@ -30,6 +30,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 function EmailCardFieldsComponent( {emailSubmission}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [fields, setFields] = useState<any>([]);
   const [newFieldName, setNewFieldName] = useState("");

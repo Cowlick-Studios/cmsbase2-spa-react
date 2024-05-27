@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
-import {http, axios} from '../../../services/http';
+import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 import { TenantContext } from '../../../contexts/admin/TenantContext';
 
@@ -24,6 +24,7 @@ import Modal from '../../utility/Modal';
 function UpdateUserModalComponent( {open, setOpen, users, setUsers, user}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
+  const http = useAxios();
 
   const [newUserName, setNewUserName] = useState("");
   const [newUserPublic, setNewUserPublic] = useState(false);
