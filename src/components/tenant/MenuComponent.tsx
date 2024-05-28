@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -182,6 +183,17 @@ function MenuComponent( {children, enforce = true}: any ) {
                 <MailIcon />
               </ListItemIcon>
               <ListItemText primary="Mail" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/form');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/form')}>
+              <ListItemIcon>
+                <ListAltIcon />
+              </ListItemIcon>
+              <ListItemText primary="Form" />
             </ListItemButton>
           </ListItem>
 
