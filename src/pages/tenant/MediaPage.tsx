@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
 import {useAxios, axios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
-import generateUrl from '../../utility/generateUrl';
+import generateImageUrl from '../../utility/generateImageUrl';
 import numeral from 'numeral';
 
 import Grid from '@mui/material/Grid';
@@ -154,8 +154,8 @@ function MediaPage( {}: any ) {
                 <ImageListItem key={`ImageListItem-${image.id}`}>
                   <img
                     className='hoverClick'
-                    srcSet={generateUrl(image.uri, AppContextState.tenant)}
-                    src={generateUrl(image.uri, AppContextState.tenant)}
+                    srcSet={generateImageUrl(image.uri, AppContextState.tenant)}
+                    src={generateImageUrl(image.uri, AppContextState.tenant)}
                     alt={image.name}
                     loading="lazy"
                     onClick={() => {
@@ -187,8 +187,8 @@ function MediaPage( {}: any ) {
                       <TableCell>
                         <img
                           width="100px"
-                          srcSet={generateUrl(image.uri, AppContextState.tenant)}
-                          src={generateUrl(image.uri, AppContextState.tenant)}
+                          srcSet={generateImageUrl(image.uri, AppContextState.tenant)}
+                          src={generateImageUrl(image.uri, AppContextState.tenant)}
                           alt={image.name}
                           loading="lazy"
                         />

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link as A } from 'react-router-dom';
 import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
-import generateUrl from '../../../utility/generateUrl';
+import generateImageUrl from '../../../utility/generateImageUrl';
 
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -103,7 +103,7 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
             <Grid container spacing={2}>
 
               <Grid container item xs={6}>
-                <img className='imageResize' src={generateUrl(image.uri, AppContextState.tenant)} alt='UpdateImageInstance'/>
+                <img className='imageResize' src={generateImageUrl(image.uri, AppContextState.tenant)} alt='UpdateImageInstance'/>
               </Grid>
 
               <Grid container item xs={6} spacing={2}>
