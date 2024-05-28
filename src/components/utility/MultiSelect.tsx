@@ -7,16 +7,34 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 
-function MultiSelect({options, label, onChange = () => {}}: any) {
+function MultiSelect({preSelect, options, label, onChange = () => {}}: any) {
 
   // Options is array of objects containing id and name keys
 
   const [selected, setSelected] = useState<any[]>([]);
 
   const onSelectChange = (event: any) => {
+    console.log(event.target.value);
     setSelected(event.target.value);
     onChange(event.target.value);
   }
+
+  useEffect(() => {
+    console.log(options);
+    console.log(preSelect);
+  }, [preSelect, options]);
+
+  useEffect(() => {
+    let preSelectOptions: any[] = [];
+
+    preSelect.forEach((preSelectItem: any) => {
+      preSelectOptions.push(options.find((option: any) => {
+        return option.id == preSelectItem.id;
+      }));
+    });
+
+    setSelected(preSelectOptions);
+  }, [preSelect]);
 
   return (
     <>
@@ -40,6 +58,7 @@ function MultiSelect({options, label, onChange = () => {}}: any) {
         >
           {options.map((option: any) => (
             <MenuItem
+              selected
               key={option.id}
               value={option}
             >

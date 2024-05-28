@@ -38,12 +38,21 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
   const [name, setName] = useState("");
   const [altText, setAltText] = useState("");
   const [caption, setCaption] = useState("");
+  const [imageCollections, setImageCollections] = useState<any[]>([]);
 
   useEffect(() => {
     console.log(image);
     setName(image.name || "");
     setAltText(image.alternative_text || "");
     setCaption(image.caption || "");
+    setImageCollections(image.collections?.map((collection: any) => {
+      return {
+        id: collection.id,
+        name: collection.name,
+        created_at: collection.created_at,
+        updated_at: collection.updated_at,
+      }
+    }) || []);
   }, [image]);
 
   const handleOpen = () => {
@@ -92,6 +101,7 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
         return value.id;
       })
     }).then((res: any) => {
+      // setImageCollections(res.data.file.collections);
       console.log(res);
     });
   };
@@ -131,7 +141,7 @@ function ImageUpdateModalComponent( {open, setOpen, images, setImages, image, co
 
                 {/* Multi select group */}
                 <Grid item xs={12}>
-                  <MultiSelect options={collections} label="Collections" onChange={onCollectionSelect}/>
+                  <MultiSelect options={collections} preSelect={imageCollections} label="Collections" onChange={onCollectionSelect}/>
                 </Grid>
 
                 <Grid container item xs={12} gap={1}>
