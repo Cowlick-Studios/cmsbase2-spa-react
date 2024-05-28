@@ -109,11 +109,11 @@ function Router() {
           </RequireAuthComponent>
         }/>
 
-        <Route path="/mail" element={
+        {/* <Route path="/mail" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <EmailPage/>
           </RequireAuthComponent>
-        }/>
+        }/> */}
 
         <Route path="/form" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>

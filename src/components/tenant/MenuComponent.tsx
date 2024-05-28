@@ -175,7 +175,7 @@ function MenuComponent( {children, enforce = true}: any ) {
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding onClick={() => {
+          {/* <ListItem disablePadding onClick={() => {
             navigate('/mail');
           }}>
             <ListItemButton selected={isCurrentRoute('/mail')}>
@@ -184,7 +184,7 @@ function MenuComponent( {children, enforce = true}: any ) {
               </ListItemIcon>
               <ListItemText primary="Mail" />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
 
           <ListItem disablePadding onClick={() => {
             navigate('/form');
