@@ -25,6 +25,7 @@ import { ClientAnalyticsPage } from './pages/tenant/ClientAnalytics';
 import { PagesDocumentPage } from './pages/tenant/PagesDocumentPage';
 import { AuthPage } from './pages/tenant/AuthPage';
 import { FormPage } from './pages/tenant/FormPage';
+import { MarketingPage } from './pages/tenant/MarketingPage';
 
 function Router() {
   return (
@@ -118,6 +119,12 @@ function Router() {
         <Route path="/form" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
             <FormPage/>
+          </RequireAuthComponent>
+        }/>
+
+        <Route path="/marketing" element={
+          <RequireAuthComponent enforce={true} enforceTenant={false}>
+            <MarketingPage/>
           </RequireAuthComponent>
         }/>
 

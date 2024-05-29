@@ -27,6 +27,7 @@ import WebIcon from '@mui/icons-material/Web';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ArticleIcon from '@mui/icons-material/Article';
+import MarkunreadMailboxIcon from '@mui/icons-material/MarkunreadMailbox';
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -194,6 +195,17 @@ function MenuComponent( {children, enforce = true}: any ) {
                 <ListAltIcon />
               </ListItemIcon>
               <ListItemText primary="Form" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => {
+            navigate('/marketing');
+          }}>
+            <ListItemButton selected={isCurrentRoute('/marketing')}>
+              <ListItemIcon>
+                <MarkunreadMailboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Marketing" />
             </ListItemButton>
           </ListItem>
 
