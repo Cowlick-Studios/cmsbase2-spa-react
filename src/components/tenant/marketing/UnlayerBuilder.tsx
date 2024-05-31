@@ -4,6 +4,7 @@ import {useAxios, axios} from '../../../services/http';
 import { AppContext } from '../../../contexts/AppContext';
 
 import { Grid, Button } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 import EmailEditor, { EditorRef, EmailEditorProps } from 'react-email-editor';
 
@@ -14,6 +15,14 @@ function UnlayerBuilder( {mailer, mailers, setMailers}: any ) {
   const http = useAxios();
 
   const emailEditorRef = useRef<EditorRef>(null);
+
+  const [mailerName, setMailerName] = useState<string>("");
+  const [mailerSubject, setMailerSubject] = useState<string>("");
+
+  useEffect(() => {
+    setMailerName(mailer.name);
+    setMailerSubject(mailer.subject);
+  }, [mailer]);
 
   const onReady: EmailEditorProps['onReady'] = (unlayer) => {
     // editor is ready
@@ -34,6 +43,8 @@ function UnlayerBuilder( {mailer, mailers, setMailers}: any ) {
       const {html, design} = data;
 
       http.patch(`/marketing_mailer/${mailer.id}`, {
+        name: mailerName,
+        subject: mailerSubject,
         unlayer_data: JSON.stringify(design),
         html: html
       }).then((res) => {
@@ -49,9 +60,19 @@ function UnlayerBuilder( {mailer, mailers, setMailers}: any ) {
 
   return (
     <>
-      <Grid container gap={2}>
-        <Grid item container xs={12} justifyContent="flex-end">
-          <Button variant="contained" onClick={() => {
+      <Grid container spacing={2} sx={{paddingTop: '10px'}}>
+        <Grid item container xs={5} justifyContent="flex-end">
+          <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" type="text" value={mailerName} size="small" onChange={(e) => {
+            setMailerName(e.target.value);
+          }} />
+        </Grid>
+        <Grid item container xs={5} justifyContent="flex-end">
+          <TextField fullWidth id="outlined-basic" label="Subject" variant="outlined" type="text" value={mailerSubject} size="small" onChange={(e) => {
+            setMailerSubject(e.target.value);
+          }} />
+        </Grid>
+        <Grid item container xs={2} justifyContent="flex-end">
+          <Button fullWidth variant="contained" onClick={() => {
             saveMailer();
           }}>save</Button>
         </Grid>
