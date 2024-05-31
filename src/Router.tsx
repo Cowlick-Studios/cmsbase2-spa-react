@@ -15,7 +15,6 @@ import {DashboardPage as TenantDashboardPage } from './pages/tenant/DashboardPag
 import { CollectionPage } from './pages/tenant/CollectionPage';
 import { DocumentPage } from './pages/tenant/DocumentPage';
 import { MediaPage } from './pages/tenant/MediaPage';
-import { EmailPage } from './pages/tenant/EmailPage';
 import { UserPage as TenantUserPage } from './pages/tenant/UserPage';
 import { RequestPage } from './pages/tenant/RequestPage';
 import { SettingsPage } from './pages/tenant/SettingsPage';
@@ -109,12 +108,6 @@ function Router() {
             <MediaPage/>
           </RequireAuthComponent>
         }/>
-
-        {/* <Route path="/mail" element={
-          <RequireAuthComponent enforce={true} enforceTenant={false}>
-            <EmailPage/>
-          </RequireAuthComponent>
-        }/> */}
 
         <Route path="/form" element={
           <RequireAuthComponent enforce={true} enforceTenant={false}>
