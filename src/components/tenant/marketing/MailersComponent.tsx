@@ -19,21 +19,26 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
 import EditMailerModalComponent from './EditMailerModalComponent';
+import MailerCardComponent from './MailerCardComponent';
 
-function MailersComponent( {open, setOpen, emailSubmissions, setEmailSubmissions}: any ) {
+function MailersComponent( {}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
   const http = useAxios();
 
   const [mailers, setMailers] = useState<any[]>([]);
   const [newMailerName, setNewMailerName] = useState<string>("");
-  const [selectedMailer, setSelectedMailer] = useState<any>({});
-  const [openMailerEditor, setOpenMailerEditor] = useState<boolean>(false);
+
+  const [mailingLists, setMailingLists] = useState<any[]>([]);
 
   useEffect(() => {
     http.get(`/marketing_mailer`).then((res) => {
       setMailers(res.data.mailers);
       console.log(res.data.mailers);
+    });
+
+    http.get(`/marketing_list`).then((res) => {
+      setMailingLists(res.data.lists);
     });
   }, []);
 
@@ -68,33 +73,11 @@ function MailersComponent( {open, setOpen, emailSubmissions, setEmailSubmissions
 
           {mailers.map((mailer) => (
             <Grid item container xs={3}>
-              <Card variant='outlined' sx={{width: '100%'}}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {mailer.name}
-                  </Typography>
-                  <Card sx={{
-                    scale: 0.3,
-                    maxHeight: '300px'
-                  }}>
-                    <CardContent>
-                      {Parser().parse(mailer.html)}
-                    </CardContent>
-                  </Card>
-                </CardContent>
-                <CardActions>
-                  <Button fullWidth variant="contained" onClick={() => {
-                    setSelectedMailer(mailer);
-                    setOpenMailerEditor(true);
-                  }}>Edit</Button>
-                </CardActions>
-              </Card>
+              <MailerCardComponent mailingLists={mailingLists} mailers={mailers} setMailers={setMailers} mailer={mailer} />
             </Grid>
           ))}
         </Grid>
       </Grid>
-
-      <EditMailerModalComponent open={openMailerEditor} setOpen={setOpenMailerEditor} mailers={mailers} setMailers={setMailers} mailer={selectedMailer}/>
     </>
   );
 }

@@ -32,7 +32,6 @@ function MailingListsComponent( {open, setOpen, emailSubmissions, setEmailSubmis
   useEffect(() => {
     http.get(`/marketing_list`).then((res) => {
       setMailingLists(res.data.lists);
-      console.log(res.data.lists);
     });
   }, []);
 
