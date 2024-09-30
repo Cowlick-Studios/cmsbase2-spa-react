@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {axios, useAxios} from '../../services/http';
 import { AppContext } from '../../contexts/AppContext';
-import generateUrl from '../../utility/generateUrl';
+import generateImageUrl from '../../utility/generateImageUrl';
 
 import { Card } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
@@ -59,8 +59,8 @@ function FileSelect({onChange, preselectFileId = null}: any) {
             <Grid item xs={4}>
               {selectedFile ? <img
                 className='imageResize'
-                srcSet={generateUrl(selectedFile.uri, AppContextState.tenant)}
-                src={generateUrl(selectedFile.uri, AppContextState.tenant)}
+                srcSet={generateImageUrl(selectedFile.uri, AppContextState.tenant)}
+                src={generateImageUrl(selectedFile.uri, AppContextState.tenant)}
                 alt={selectedFile.name}
                 loading="lazy"
               /> : <span><i>Empty</i></span>}
@@ -95,8 +95,8 @@ function FileSelect({onChange, preselectFileId = null}: any) {
                     <ImageListItem key={`ImageListItem-${file.id}`}>
                       <img
                         className='hoverClick'
-                        srcSet={generateUrl(file.uri, AppContextState.tenant)}
-                        src={generateUrl(file.uri, AppContextState.tenant)}
+                        srcSet={generateImageUrl(file.uri, AppContextState.tenant)}
+                        src={generateImageUrl(file.uri, AppContextState.tenant)}
                         alt={file.name}
                         loading="lazy"
                         onClick={() => {

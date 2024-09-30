@@ -15,6 +15,10 @@ import TextField from '@mui/material/TextField';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import Typography from '@mui/material/Typography';
+import Switch from '@mui/material/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Chip from '@mui/material/Chip';
 
 import Modal from '../../utility/Modal';
 
@@ -27,8 +31,13 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
   const [newTenantFileLimit, setNewTenantFileLimit] = useState(0);
   const [newTenantDatabaseLimit, setNewTenantDatabaseLimit] = useState(0);
 
+  const [newTenantUserName, setNewTenantUserName] = useState("");
+  const [newTenantUserEmail, setNewTenantUserEmail] = useState("");
+  const [newTenantUserPassword, setNewTenantUserPassword] = useState("");
+  const [newTenantUserAdmin, setNewTenantUserAdmin] = useState(false);
+
   useEffect(() => {
-    if(tenant){
+    if(tenant.hasOwnProperty("id")){
       setNewTenantFileLimit(tenant.storage_limit_file);
       setNewTenantDatabaseLimit(tenant.storage_limit_database);
     }
@@ -63,6 +72,17 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
     });
   }
 
+  const createNewTenantUser = () => {
+    http.post(`/tenant/${tenant.id}/user`, {
+      name: newTenantUserName,
+      email: newTenantUserEmail,
+      password: newTenantUserPassword,
+      admin: newTenantUserAdmin
+    }).then((res) => {
+      handleClose();
+    });
+  }
+
   return (
     <>
       <Modal open={open} setOpen={setOpen} onClose={handleClose}>
@@ -86,6 +106,42 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
                   setNewTenantDatabaseLimit(Number(e.target.value));
                 }} />
               </Grid>
+
+              {/* User Creation */}
+              <Grid item xs={12}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Grid container gap={2}>
+                      <Grid item xs={12}>
+                        <TextField fullWidth label="Name" variant="outlined" value={newTenantUserName} onChange={(e) => {
+                          setNewTenantUserName(e.target.value);
+                        }} />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField fullWidth label="Email" variant="outlined" type="email" value={newTenantUserEmail} onChange={(e) => {
+                          setNewTenantUserEmail(e.target.value);
+                        }} />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField fullWidth label="Password" variant="outlined" type="password" value={newTenantUserPassword} onChange={(e) => {
+                          setNewTenantUserPassword(e.target.value);
+                        }} />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormGroup>
+                          <FormControlLabel control={<Switch checked={newTenantUserAdmin} onChange={(e) => {
+                            setNewTenantUserAdmin(e.target.checked);
+                          }} />} label="Is Admin" />
+                        </FormGroup>
+                      </Grid>
+                      <Grid container item xs={12} gap={1}>
+                        <Button variant="contained" onClick={createNewTenantUser}>Create User</Button>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
+
               <Grid container item xs={12} gap={1}>
                 <Button variant="contained" onClick={updatedTenant}>Save</Button>
                 <Button color="error" variant="contained" onClick={handleClose}>Close</Button>

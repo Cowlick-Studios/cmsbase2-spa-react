@@ -98,7 +98,7 @@ function DocumentTableComponent( {collection, collectionFields, documents, setDo
                 )}</TableCell>
 
                 {collectionFields.map((field: any) => (
-                  <TableCell key={`CollectionDocumentTableRow-${document.id}-${field.id}`}>{String(document[field.name])}</TableCell>
+                  <TableCell key={`CollectionDocumentTableRow-${document.id}-${field.id}`}>{String(document[field.name]).substring(0, 200)}</TableCell>
                 ))}
 
                 <TableCell>{document.created_at}</TableCell>

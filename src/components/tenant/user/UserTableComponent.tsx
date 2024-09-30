@@ -94,7 +94,7 @@ function UserTableComponent( {users, setUsers}: any ) {
 
                 <TableCell className='hoverClick' onClick={() => {
                   togglePublic(user);
-                }}>{user.public ? <Chip size="small" label="Public" color="success" /> : <Chip size="small" label="Admin" color="primary" />}</TableCell>
+                }}>{user.public ? <Chip size="small" label="Public" color="success" /> : <Chip size="small" label="Private" color="primary" />}</TableCell>
 
                 <TableCell className='hoverClick' onClick={() => {
                   toggleBlocked(user);
