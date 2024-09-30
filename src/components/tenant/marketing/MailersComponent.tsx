@@ -48,8 +48,7 @@ function MailersComponent( {}: any ) {
       unlayer_data: null,
       html: null
     }).then((res) => {
-      setMailers([...mailers]);
-      console.log(res.data);
+      setMailers([...mailers, res.data.mailer]);
     });
   }
 

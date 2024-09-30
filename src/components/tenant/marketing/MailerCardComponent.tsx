@@ -43,6 +43,14 @@ function MailerCardComponent( {mailingLists, mailer, mailers, setMailers}: any )
     });
   }
 
+  const deleteMailer = () => {
+    http.delete(`/marketing_mailer/${mailer.id}`).then((res) => {
+      setMailers(mailers.filter((mailerItem: any) => {
+        return mailerItem.id != mailer.id;
+      }));
+    });
+  }
+
   return (
     <>
       <Card variant='outlined' sx={{width: '100%'}}>
@@ -61,10 +69,15 @@ function MailerCardComponent( {mailingLists, mailer, mailers, setMailers}: any )
         </CardContent>
         <CardActions>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
+            <Grid item xs={8}>
               <Button fullWidth variant="contained" onClick={() => {
                 setOpenMailerEditor(true);
               }}>Edit</Button>
+            </Grid>
+            <Grid item xs={4}>
+              <Button fullWidth variant="contained" color='error' onClick={() => {
+                deleteMailer();
+              }}>delete</Button>
             </Grid>
             <Grid item xs={9}>
               <Select
@@ -76,7 +89,6 @@ function MailerCardComponent( {mailingLists, mailer, mailers, setMailers}: any )
                   setSelectedMailingList(event.target.value);
                 }}
                 renderValue={(selected: any) => {
-                  console.log(selected);
                   return (
                     <p>{selected.name}</p>
                   );
