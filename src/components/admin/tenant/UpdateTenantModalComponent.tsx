@@ -22,6 +22,9 @@ import Chip from '@mui/material/Chip';
 
 import Modal from '../../utility/Modal';
 
+import { UserTableComponent } from './user/UserTableComponent';
+import NewUserModalComponent from './user/NewUserModalComponent';
+
 function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
   const navigate = useNavigate();
   const AppContextState: any = useContext(AppContext);
@@ -36,10 +39,17 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
   const [newTenantUserPassword, setNewTenantUserPassword] = useState("");
   const [newTenantUserAdmin, setNewTenantUserAdmin] = useState(false);
 
+  const [tenantUsers, setTenantUsers] = useState<any[]>([]);
+  const [openNewUser, setOpenNewUser] = useState(false);
+
   useEffect(() => {
     if(tenant.hasOwnProperty("id")){
       setNewTenantFileLimit(tenant.storage_limit_file);
       setNewTenantDatabaseLimit(tenant.storage_limit_database);
+
+      http.get(`/tenant/${tenant.id}`).then((res) => {
+        setTenantUsers(res.data.users);
+      });
     }
   }, [tenant]);
 
@@ -72,17 +82,6 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
     });
   }
 
-  const createNewTenantUser = () => {
-    http.post(`/tenant/${tenant.id}/user`, {
-      name: newTenantUserName,
-      email: newTenantUserEmail,
-      password: newTenantUserPassword,
-      admin: newTenantUserAdmin
-    }).then((res) => {
-      handleClose();
-    });
-  }
-
   return (
     <>
       <Modal open={open} setOpen={setOpen} onClose={handleClose}>
@@ -107,35 +106,15 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
                 }} />
               </Grid>
 
-              {/* User Creation */}
-              <Grid item xs={12}>
+              <Grid container item xs={12} gap={1}>
                 <Card variant="outlined">
                   <CardContent>
                     <Grid container gap={2}>
                       <Grid item xs={12}>
-                        <TextField fullWidth label="Name" variant="outlined" value={newTenantUserName} onChange={(e) => {
-                          setNewTenantUserName(e.target.value);
-                        }} />
+                        <Button variant="contained" onClick={() => setOpenNewUser(true)}>New Tenant user</Button>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField fullWidth label="Email" variant="outlined" type="email" value={newTenantUserEmail} onChange={(e) => {
-                          setNewTenantUserEmail(e.target.value);
-                        }} />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField fullWidth label="Password" variant="outlined" type="password" value={newTenantUserPassword} onChange={(e) => {
-                          setNewTenantUserPassword(e.target.value);
-                        }} />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FormGroup>
-                          <FormControlLabel control={<Switch checked={newTenantUserAdmin} onChange={(e) => {
-                            setNewTenantUserAdmin(e.target.checked);
-                          }} />} label="Is Admin" />
-                        </FormGroup>
-                      </Grid>
-                      <Grid container item xs={12} gap={1}>
-                        <Button variant="contained" onClick={createNewTenantUser}>Create User</Button>
+                        <UserTableComponent users={tenantUsers} setUsers={setTenantUsers} tenant={tenant}/>
                       </Grid>
                     </Grid>
                   </CardContent>
@@ -146,9 +125,11 @@ function UpdateTenantModalComponent( {open, setOpen, tenant}: any ) {
                 <Button variant="contained" onClick={updatedTenant}>Save</Button>
                 <Button color="error" variant="contained" onClick={handleClose}>Close</Button>
               </Grid>
-            </Grid>
 
+            </Grid>
       </Modal>
+
+      <NewUserModalComponent open={openNewUser} setOpen={setOpenNewUser} users={tenantUsers} setUsers={setTenantUsers} tenant={tenant}/>
     </>
   );
 }
