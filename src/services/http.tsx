@@ -50,6 +50,11 @@ const generateAxiosInstance = () => {
             detail: { message: error.response.data.message },
           }));
           break;
+        case 500:
+          document.dispatchEvent(new CustomEvent('response_401', {
+            detail: { message: error.response.data.message },
+          }));
+          break;
       }
   
       document.dispatchEvent(new CustomEvent('request_error', {
