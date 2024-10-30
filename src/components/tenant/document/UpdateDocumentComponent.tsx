@@ -45,8 +45,6 @@ function UpdateDocumentComponent( {open, setOpen, collection, collectionFields, 
     const newDocumentRequestObjectTEMP: any = {};
 
     for(const field of sortedCollectionFields){
-      console.log(field.type.name);
-      console.log(document[field.name].id);
       if(['tinyInteger', 'unsignedTinyInteger', 'smallInteger', 'unsignedSmallInteger', 'integer', 'unsignedInteger', 'mediumInteger', 'unsignedMediumInteger', 'bigInteger', 'unsignedBigInteger', 'decimal', 'unsignedDecimal', 'float', 'double'].includes(field.type.name)){
         newDocumentRequestObjectTEMP[field.name] = Number(document[field.name]);
       } else if(['char', 'string', 'tinyText', 'text', 'mediumText', 'longText'].includes(field.type.name)){
@@ -54,7 +52,7 @@ function UpdateDocumentComponent( {open, setOpen, collection, collectionFields, 
       } else if(field.type.name === 'boolean'){
         newDocumentRequestObjectTEMP[field.name] = Boolean(document[field.name]);
       } else if(field.type.name === 'file'){
-        newDocumentRequestObjectTEMP[field.name] = Number(document[field.name].id);
+        newDocumentRequestObjectTEMP[field.name] = Number(document[field.name]?.id);
       } else {
         newDocumentRequestObjectTEMP[field.name] = document[field.name];
       }
@@ -101,7 +99,7 @@ function UpdateDocumentComponent( {open, setOpen, collection, collectionFields, 
       } else if(field.type.name === 'boolean'){
         newDocumentRequestObject[field.name] = Boolean(document[field.name]);
       } else if(field.type.name === 'file'){
-        newDocumentRequestObject[field.name] = Number(document[field.name].id);
+        newDocumentRequestObject[field.name] = Number(document[field.name]?.id);
       } else {
         newDocumentRequestObject[field.name] = document[field.name];
       }
